@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import { SITE, T, ROUTES } from '../data/site.js';
+import { u, photo } from '../lib/helpers.js';
+const { lang = 'es' } = Astro.props;
+const t = T[lang];
+const es = lang === 'es';
+
+const intro = es
+  ? 'Soy diseñadora de interiores y hace más de 30 años que trabajo en proyectos residenciales y corporativos en Buenos Aires, José Ignacio, París y Madrid.'
+  : 'I am an interior designer, and for over 30 years I have worked on residential and corporate projects in Buenos Aires, José Ignacio, Paris and Madrid.';
+
+const story = es ? [
+  'Me formé de manera autodidacta: cuando terminé el colegio, el diseño de interiores todavía no era una carrera. Visitar Casa FOA en 1985 me terminó de decidir, y durante más de 25 años trabajé en proyectos junto a grandes estudios de arquitectura.',
+  'Me conocen por integrar el diseño interior con la arquitectura. Trabajo siempre en equipo con el cliente, el estudio de arquitectura y la empresa constructora, desde el primer plano hasta el último detalle.',
+  'Viajo todo el año en busca de novedades de diseño y participo en congresos en distintas ciudades del mundo. Comparto lo que aprendo en publicaciones especializadas y en charlas en universidades y empresas.',
+] : [
+  'I am self-taught: when I finished school, interior design was not yet a degree. A visit to Casa FOA in 1985 settled it for me, and for more than 25 years I worked on projects alongside major architecture firms.',
+  'I am known for integrating interior design with architecture. I always work as a team with the client, the architecture studio and the builder, from the first layout to the last detail.',
+  'I travel all year round in search of new design and take part in congresses around the world. I share what I learn in specialised publications and in talks at universities and companies.',
+];
+
+const principles = es ? [
+  ['Materia', 'Uso refinado de los materiales y colores sofisticados.'],
+  ['Historia', 'Diálogo entre el diseño contemporáneo y las piezas con historia propia.'],
+  ['Luz', 'Respeto por la caja arquitectónica: orden, luz y nada superfluo.'],
+] : [
+  ['Material', 'A refined use of materials and sophisticated colours.'],
+  ['History', 'A dialogue between contemporary design and pieces with a history of their own.'],
+  ['Light', 'Respect for the architectural shell: order, light and nothing superfluous.'],
+];
+
+const path = es ? [
+  ['Leaders of Design Council', 'Miembro. Soy la única integrante argentina en Latinoamérica.'],
+  ['DArA, Diseñadores Argentinos Asociados', 'Integré la Comisión Directiva durante casi una década y trabajé en la organización del congreso DArA id.'],
+  ['IFI, International Federation of Interior Architects / Designers', 'Fui nexo entre DArA y la federación internacional.'],
+  ['Casa FOA', 'Participé en varias ediciones, entre ellas 2014, 2015 y 2016.'],
+] : [
+  ['Leaders of Design Council', 'Member, and the only Argentine member in Latin America.'],
+  ['DArA, Argentine Interior Designers Association', 'Served on the Executive Board for nearly a decade and helped organise the DArA id congress.'],
+  ['IFI, International Federation of Interior Architects / Designers', 'Liaison between DArA and the international federation.'],
+  ['Casa FOA', 'Took part in several editions, including 2014, 2015 and 2016.'],
+];
+---
+<section class="page-head wrap">
+  <h1 class="band-title">{t.studioTitle}</h1>
+  <p class="page-lead">{intro}</p>
+</section>
+
+<section class="wrap studio-page">
+  <div class="studio-media" data-reveal>
+    <!-- [COMPLETAR] retrato de Matty; por ahora, una obra -->
+    <Image src={photo('piso-barrio-salamanca', 'pasillo-entrada.jpg')} alt={es ? 'Pasillo de entrada blanco con vista al salón, piso en Madrid' : 'White entrance hall looking into the living room, Madrid apartment'}
+      widths={[480, 800, 1100]} sizes="(min-width: 960px) 40vw, 100vw" format="webp" quality={78} loading="eager" />
+  </div>
+  <div class="studio-copy" data-reveal>
+    {story.map((s) => <p>{s}</p>)}
+  </div>
+</section>
+
+<section class="band" aria-labelledby="fil">
+  <div class="wrap">
+    <h2 class="band-title" id="fil">{es ? 'Filosofía' : 'Philosophy'}</h2>
+    <ol class="principles">
+      {principles.map(([k, v], i) => (
+        <li data-reveal><span class="label">{String(i + 1).padStart(2, '0')}</span><h3 class="card-title">{k}</h3><p class="card-text">{v}</p></li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="band press" aria-labelledby="tra">
+  <div class="wrap">
+    <h2 class="band-title" id="tra">{es ? 'Trayectoria' : 'Background'}</h2>
+    <dl class="path">
+      {path.map(([k, v]) => (<div data-reveal><dt class="card-title">{k}</dt><dd class="card-text">{v}</dd></div>))}
+    </dl>
+  </div>
+</section>
+
+<section class="contact wrap">
+  <h2 data-reveal>{t.contactTitle}</h2>
+  <div class="contact-links"><a class="link-line" href={u(ROUTES[lang].contact)}>{t.nav.contact}</a></div>
+</section>

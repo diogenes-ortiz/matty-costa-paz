@@ -1,0 +1,12 @@
+---
+import { PRESS_LOGOS } from '../data/site.js';
+import { logo } from '../lib/helpers.js';
+---
+<ul class="logos" data-reveal>
+  {PRESS_LOGOS.map((m) => {
+    const img = logo(m.file);
+    const w = Math.round((img.width / img.height) * m.h);
+    const el = <img src={img.src} alt={m.name} width={w} height={m.h} loading="lazy" decoding="async" style={`height:${m.h}px`} />;
+    return <li>{m.url ? <a href={m.url} target="_blank" rel="noopener" title={m.name}>{el}</a> : el}</li>;
+  })}
+</ul>

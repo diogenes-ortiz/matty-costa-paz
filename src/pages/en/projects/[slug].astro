@@ -1,0 +1,21 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ProjectPage from '../../../components/ProjectPage.astro';
+import { PROJECTS } from '../../../data/site.js';
+import { photo } from '../../../lib/helpers.js';
+import { getImage } from 'astro:assets';
+
+export function getStaticPaths() {
+  return PROJECTS.map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props;
+const lang = 'en';
+const og = await getImage({ src: photo(p.slug, p.cover), width: 1200, format: 'jpg' });
+---
+<Base lang={lang} page="projects" overHero
+  title={`${p.name[lang]} | Matty Costa Paz`}
+  description={p.excerpt[lang]}
+  altPath={`proyectos/${p.slug}/`}
+  image={og.src}>
+  <ProjectPage p={p} lang={lang} />
+</Base>

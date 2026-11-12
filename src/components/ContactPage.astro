@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import { SITE, T } from '../data/site.js';
+import { photo } from '../lib/helpers.js';
+const { lang = 'es' } = Astro.props;
+const t = T[lang];
+const es = lang === 'es';
+const links = [
+  ['Email', SITE.email, `mailto:${SITE.email}`],
+  ['Instagram', '@mattycostapaz', SITE.instagram],
+  ['LinkedIn', 'Matty Costa Paz', SITE.linkedin],
+];
+---
+<section class="contact-page wrap">
+  <div class="contact-copy">
+    <h1 class="band-title" style="text-align:left">{t.contactPageTitle}</h1>
+    <p class="studio-text">{t.contactTitle}</p>
+    <p class="muted" style="margin-top:20px;max-width:42ch">{t.contactIntro}</p>
+    <ul class="contact-list">
+      {links.map(([k, v, h]) => (
+        <li><span class="label">{k}</span><a href={h} target={h.startsWith('http') ? '_blank' : undefined} rel="noopener">{v}</a></li>
+      ))}
+    </ul>
+    <p class="label" style="margin-top:40px">{SITE.cities.join('  ·  ')}</p>
+  </div>
+  <div class="contact-media">
+    <Image src={photo('beach-house-jose-ignacio', 'galeria-entrada.jpg')} alt={es ? 'Celosías de madera y sillas de mimbre en la entrada de la casa de José Ignacio' : 'Timber lattices and wicker chairs at the entrance of the José Ignacio house'}
+      widths={[400, 700]} sizes="(min-width: 960px) 35vw, 100vw" format="webp" quality={80} loading="eager" />
+  </div>
+</section>

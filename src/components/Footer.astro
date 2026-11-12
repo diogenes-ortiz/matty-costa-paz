@@ -1,5 +1,5 @@
 ---
-import { SITE, T, ROUTES } from '../data/site.js';
+import { SITE, T, ROUTES, NAV } from '../data/site.js';
 const { lang = 'es' } = Astro.props;
 const t = T[lang];
 const r = ROUTES[lang];
@@ -14,7 +14,7 @@ const year = new Date().getFullYear();
       <p class="muted">{t.role}<br />{SITE.cities.join(' · ')}</p>
     </div>
     <ul class="footer-links">
-      {(['projects', 'studio', 'services', 'press', 'contact']).map((k) => (
+      {NAV.map((k) => (
         <li><a href={u(r[k])}>{t.nav[k]}</a></li>
       ))}
     </ul>

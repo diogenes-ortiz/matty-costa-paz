@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE, T, ROUTES } from '../data/site.js';
 
-const { lang = 'es', page = 'home', title, description } = Astro.props;
+const { lang = 'es', page = 'home', title, description, altPath, overHero = false, image } = Astro.props;
 const t = T[lang];
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const u = (p) => base + p;
@@ -12,8 +12,10 @@ const pageTitle = title ?? t.title;
 const pageDesc = description ?? t.description;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const alt = lang === 'es' ? 'en' : 'es';
-const altHref = new URL(u(ROUTES[alt][page] ?? ROUTES[alt].home), Astro.site).href;
-const esHref = new URL(u(ROUTES.es[page] ?? ''), Astro.site).href;
+const altHref = new URL(u(altPath ?? ROUTES[alt][page] ?? ROUTES[alt].home), Astro.site).href;
+const esHref = lang === 'es' ? canonical : altHref;
+
+const fontCss = `@font-face{font-family:"Avant Garde MCP";src:local("ITC Avant Garde Gothic"),local("ITC Avant Garde Gothic Pro"),url("${u("fonts/texgyreadventor-regular.otf")}") format("opentype");font-weight:400;font-display:swap}@font-face{font-family:"Avant Garde MCP";src:local("ITC Avant Garde Gothic Pro Demi"),url("${u("fonts/texgyreadventor-bold.otf")}") format("opentype");font-weight:700;font-display:swap}`;
 
 const schema = {
   '@context': 'https://schema.org',
@@ -59,16 +61,16 @@ const schema = {
   <meta property="og:description" content={pageDesc} />
   <meta property="og:url" content={canonical} />
   <meta property="og:locale" content={t.locale} />
+  {image && <meta property="og:image" content={new URL(image, Astro.site).href} />}
+  <link rel="preload" href={u('fonts/texgyreadventor-regular.otf')} as="font" type="font/otf" crossorigin />
   <link rel="icon" href={u('favicon.svg')} type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet" />
+  <style is:inline set:html={fontCss}></style>
   <script is:inline>document.documentElement.classList.add('js');</script>
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 </head>
 <body>
-  <a class="skip" href="#main">{lang === 'es' ? 'Saltar al contenido' : 'Skip to content'}</a>
-  <Header lang={lang} page={page} />
+  <a class="skip" href="#main">{t.skip}</a>
+  <Header lang={lang} page={page} altPath={altPath} overHero={overHero} />
   <main id="main"><slot /></main>
   <Footer lang={lang} />
   <script>

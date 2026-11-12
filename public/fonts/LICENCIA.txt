@@ -1,0 +1,2 @@
+TeX Gyre Adventor (clon libre de ITC Avant Garde Gothic) - GUST e-foundry.
+Licencia: GUST Font License (LPPL). Fuente: https://ctan.org/pkg/tex-gyre

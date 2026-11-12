@@ -1,0 +1,48 @@
+---
+import { T, PRESS, PRESS_ARCHIVE } from '../data/site.js';
+import { logo } from '../lib/helpers.js';
+import PressLogos from './PressLogos.astro';
+const { lang = 'es' } = Astro.props;
+const t = T[lang];
+---
+<section class="page-head wrap">
+  <h1 class="band-title">{t.pressPageTitle}</h1>
+  <p class="page-intro">{t.pressIntro}</p>
+</section>
+
+<section class="wrap">
+  <PressLogos />
+</section>
+
+<section class="band" aria-labelledby="online">
+  <div class="wrap">
+    <h2 class="band-title" id="online">{t.pressOnline}</h2>
+    <ul class="press-list">
+      {PRESS.map((n) => {
+        const img = logo(n.logo);
+        const w = Math.round((img.width / img.height) * Math.min(n.h, 28));
+        const inner = (
+          <>
+            <span class="pl-logo"><img src={img.src} alt="" width={w} height={Math.min(n.h, 28)} loading="lazy" style={`height:${Math.min(n.h, 28)}px`} /></span>
+            <span class="pl-main">
+              <span class="label">{n.media}{n.year ? ` · ${n.year}` : ` · ${t.pending}`}</span>
+              <span class="pl-title">{n.title}</span>
+            </span>
+            <span class="pl-cta label">{n.url ? `${t.read} →` : t.pending}</span>
+          </>
+        );
+        return <li data-reveal>{n.url ? <a href={n.url} target="_blank" rel="noopener">{inner}</a> : <div>{inner}</div>}</li>;
+      })}
+    </ul>
+  </div>
+</section>
+
+<section class="band press" aria-labelledby="archive">
+  <div class="wrap">
+    <h2 class="band-title" id="archive">{t.pressArchive}</h2>
+    <p class="page-intro" style="margin-top:-24px">{t.pressArchiveNote}</p>
+    <ul class="archive">
+      {PRESS_ARCHIVE.map((a) => <li data-reveal><span class="card-title">{a.media}</span><span class="card-text">{a.detail[lang]}</span></li>)}
+    </ul>
+  </div>
+</section>
