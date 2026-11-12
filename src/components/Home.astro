@@ -1,0 +1,167 @@
+---
+import { Image } from 'astro:assets';
+import { SITE, T, ROUTES, PROJECTS, CATEGORIES, PRESS } from '../data/site.js';
+
+// Fotos
+import mSofa from '../assets/projects/piso-barrio-salamanca/salon-sofa-marron.jpg';
+import mSalonComedor from '../assets/projects/piso-barrio-salamanca/salon-comedor.jpg';
+import mSalon from '../assets/projects/piso-barrio-salamanca/salon.jpg';
+import mCerramiento from '../assets/projects/piso-barrio-salamanca/sala-estar-cerramiento.jpg';
+import mEscritorio from '../assets/projects/piso-barrio-salamanca/escritorio-trabajo.jpg';
+import jFachada from '../assets/projects/beach-house-jose-ignacio/fachada.jpg';
+import jEscalera from '../assets/projects/beach-house-jose-ignacio/escalera-terraza.jpg';
+
+const pressLogos = import.meta.glob('../assets/press/*', { eager: true, import: 'default' });
+const logo = (f) => pressLogos[`../assets/press/${f}`];
+
+const { lang = 'es' } = Astro.props;
+const t = T[lang];
+const r = ROUTES[lang];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const u = (p) => base + p;
+const P = Object.fromEntries(PROJECTS.map((p) => [p.slug, p]));
+const href = (slug) => u(`${r.projects}${slug}/`);
+const meta = (p) => [p.type[lang], p.place[lang], p.year].filter(Boolean).join('  |  ');
+const es = lang === 'es';
+
+const slides = [
+  { img: mSofa, p: P['piso-barrio-salamanca'], alt: es ? 'Living blanco con sofá de cuero marrón, butacas tapizadas y alfombra a rayas blancas y negras' : 'White living room with a tan leather sofa, upholstered armchairs and a black and white striped rug' },
+  { img: jFachada, p: P['beach-house-jose-ignacio'], alt: es ? 'Fachada blanca de la casa de José Ignacio con alero de quincha y palmeras' : 'White façade of the José Ignacio house with a thatched eave and palm trees' },
+  { img: mSalonComedor, p: P['piso-barrio-salamanca'], alt: es ? 'Salón y comedor integrados, paredes blancas con molduras y balcones con luz natural' : 'Open living and dining room, white walls with mouldings and balconies with natural light' },
+];
+
+const latest = [
+  { img: mSalon, p: P['piso-barrio-salamanca'], alt: es ? 'Rincón del salón con butaca blanca, mesa de mármol y ventanal' : 'Corner of the living room with a white armchair, marble table and tall window' },
+  { img: jEscalera, p: P['beach-house-jose-ignacio'], alt: es ? 'Escalera blanca hacia la terraza de la casa de José Ignacio bajo un cielo despejado' : 'White staircase leading to the terrace of the José Ignacio house under a clear sky' },
+];
+---
+<!-- Portada: fotos a pantalla completa que rotan, con el proyecto superpuesto -->
+<section class="hero" aria-roledescription="carousel" aria-label={es ? 'Proyectos destacados' : 'Featured projects'} data-hero>
+  {slides.map((s, i) => (
+    <figure class:list={['slide', { 'is-active': i === 0 }]} data-slide aria-hidden={i === 0 ? undefined : 'true'}>
+      <Image src={s.img} alt={s.alt} widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={78}
+        loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} class="cover" />
+      <figcaption class="wrap slide-cap">
+        <a href={href(s.p.slug)}>
+          <h2 class="cap-title">{s.p.name[lang]}</h2>
+          <p class="cap-text">{s.p.excerpt[lang]}</p>
+        </a>
+      </figcaption>
+    </figure>
+  ))}
+  <div class="wrap hero-count" aria-hidden="true">
+    {slides.map((_, i) => <button type="button" data-goto={i} class:list={{ 'is-active': i === 0 }}>{String(i + 1).padStart(2, '0')}</button>)}
+  </div>
+</section>
+
+<!-- Posicionamiento -->
+<section class="statement wrap">
+  <p class="label center" data-reveal>Matty Costa Paz · {t.role}</p>
+  <h1 data-reveal>{t.statement}</h1>
+  <p class="intro" data-reveal>{t.intro}</p>
+  <ul class="cities label" data-reveal>{SITE.cities.map((c) => <li>{c}</li>)}</ul>
+</section>
+
+<!-- Últimos proyectos: fila de tarjetas de distinto ancho a la misma altura -->
+<section class="band" aria-labelledby="latest">
+  <span class="vword vword-l" aria-hidden="true">{t.vertical}</span>
+  <span class="vword vword-r" aria-hidden="true">{t.vertical}</span>
+  <div class="wrap">
+    <h2 class="band-title" id="latest">{t.latest}</h2>
+    <ul class="row">
+      {latest.map((c) => (
+        <li class="card" style={`--ar:${(c.img.width / c.img.height).toFixed(3)}`} data-reveal>
+          <a href={href(c.p.slug)}>
+            <div class="card-media">
+              <Image src={c.img} alt={c.alt} widths={[480, 800, 1200]} sizes="(min-width: 720px) 50vw, 100vw" format="webp" quality={78} loading="lazy" />
+            </div>
+            <h3 class="card-title">{c.p.name[lang]}</h3>
+            <p class="card-text">{c.p.excerpt[lang]}</p>
+            <p class="card-meta">{meta(c.p)}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="band-foot"><a class="link-line" href={u(r.projects)}>{t.allProjects}</a></div>
+  </div>
+</section>
+
+<!-- Proyecto destacado a todo el ancho -->
+<section class="feature" aria-labelledby="feat">
+  <Image src={mCerramiento} alt={es ? 'Sala íntima separada por un cerramiento de aluminio bronce y vidrio, con sillón curvo blanco' : 'Intimate sitting room behind a bronze aluminium and glass partition, with a curved white sofa'}
+    widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={78} loading="lazy" class="cover" />
+  <div class="feature-cap wrap">
+    <p class="label light">{t.featured}</p>
+    <h2 id="feat" class="cap-title">{P['piso-barrio-salamanca'].name[lang]}</h2>
+    <p class="cap-text">{es
+      ? 'Un cerramiento de aluminio bronce y vidrio separa la sala íntima sin cortar la continuidad visual: la idea fue no generar divisiones, sino conexiones.'
+      : 'A bronze aluminium and glass partition sets the intimate sitting room apart without breaking the visual flow: the idea was to create connections, not divisions.'}</p>
+    <a class="link-line light" href={href('piso-barrio-salamanca')}>{t.view}</a>
+  </div>
+</section>
+
+<!-- Estudio -->
+<section class="band" aria-labelledby="est">
+  <span class="vword vword-l" aria-hidden="true">{t.verticalStudio}</span>
+  <span class="vword vword-r" aria-hidden="true">{t.verticalStudio}</span>
+  <div class="wrap">
+    <h2 class="band-title" id="est">{t.studioLabel}</h2>
+    <div class="studio-grid">
+      <div class="studio-media" data-reveal>
+        <Image src={mEscritorio} alt={es ? 'Escritorio blanco con silla de diseño, lámpara y obra de arte en el piso de Madrid' : 'White desk with a design chair, lamp and artwork in the Madrid apartment'}
+          widths={[480, 800, 1100]} sizes="(min-width: 960px) 40vw, 100vw" format="webp" quality={78} loading="lazy" />
+      </div>
+      <div data-reveal>
+        <p class="studio-text">{t.studioText}</p>
+        <ul class="memberships">{t.memberships.map((m) => <li>{m}</li>)}</ul>
+        <a class="link-line" href={u(r.studio)}>{t.studioLink}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Prensa: logos -->
+<section class="band press" aria-labelledby="pre">
+  <div class="wrap">
+    <h2 class="band-title" id="pre">{t.pressTitle}</h2>
+    <ul class="logos" data-reveal>
+      {PRESS.map((m) => {
+        const img = logo(m.file);
+        const w = Math.round((img.width / img.height) * m.h);
+        const el = <img src={img.src} alt={m.name} width={w} height={m.h} loading="lazy" decoding="async" style={`height:${m.h}px`} />;
+        return <li>{m.url ? <a href={m.url} target="_blank" rel="noopener" title={m.name}>{el}</a> : el}</li>;
+      })}
+    </ul>
+    <div class="band-foot"><a class="link-line" href={u(r.press)}>{t.pressLink}</a></div>
+  </div>
+</section>
+
+<!-- Contacto -->
+<section class="contact wrap" aria-labelledby="con">
+  <p class="label center" id="con">{t.contactLabel}</p>
+  <h2 data-reveal>{t.contactTitle}</h2>
+  <div class="contact-links">
+    <a class="link-line" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    <a class="link-line" href={SITE.instagram} target="_blank" rel="noopener">Instagram</a>
+    <a class="link-line" href={SITE.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</section>
+
+<script>
+  const hero = document.querySelector('[data-hero]');
+  if (hero) {
+    const slides = [...hero.querySelectorAll('[data-slide]')];
+    const dots = [...hero.querySelectorAll('[data-goto]')];
+    let i = 0, timer;
+    const go = (n) => {
+      slides[i].classList.remove('is-active'); slides[i].setAttribute('aria-hidden', 'true'); dots[i].classList.remove('is-active');
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add('is-active'); slides[i].removeAttribute('aria-hidden'); dots[i].classList.add('is-active');
+    };
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const start = () => { if (!reduce) { clearInterval(timer); timer = setInterval(() => go(i + 1), 6500); } };
+    dots.forEach((d) => d.addEventListener('click', () => { go(+d.dataset.goto); start(); }));
+    document.addEventListener('visibilitychange', () => (document.hidden ? clearInterval(timer) : start()));
+    start();
+  }
+</script>

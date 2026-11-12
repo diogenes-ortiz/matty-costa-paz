@@ -1,0 +1,61 @@
+---
+import { T, ROUTES } from '../data/site.js';
+const { lang = 'es', page = 'home' } = Astro.props;
+const t = T[lang];
+const r = ROUTES[lang];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const u = (p) => base + p;
+const alt = lang === 'es' ? 'en' : 'es';
+const items = ['projects', 'studio', 'services', 'press', 'contact'];
+const overHero = page === 'home';
+---
+<header class:list={['site-header', { 'over-hero': overHero }]} data-header>
+  <div class="wrap header-row">
+    <a class="wordmark" href={u(r.home)} aria-label="Matty Costa Paz, inicio">Matty Costa Paz</a>
+    <nav class="nav-desktop" aria-label="Principal">
+      <ul>
+        {items.map((k) => (
+          <li><a href={u(r[k])} aria-current={page === k ? 'page' : undefined}>{t.nav[k]}</a></li>
+        ))}
+      </ul>
+      <a class="lang" href={u(ROUTES[alt][page] ?? ROUTES[alt].home)} hreflang={alt} lang={alt}>{alt.toUpperCase()}</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mobile" data-menu-open>{t.menu}</button>
+  </div>
+
+  <div class="menu-mobile" id="menu-mobile" hidden data-menu>
+    <div class="wrap header-row">
+      <a class="wordmark" href={u(r.home)}>Matty Costa Paz</a>
+      <button class="menu-btn" type="button" data-menu-close>{t.close}</button>
+    </div>
+    <nav class="wrap" aria-label="Principal">
+      <ol>
+        {items.map((k, i) => (
+          <li><a href={u(r[k])}><span class="idx">0{i + 1}</span>{t.nav[k]}</a></li>
+        ))}
+      </ol>
+      <a class="lang" href={u(ROUTES[alt][page] ?? ROUTES[alt].home)} hreflang={alt} lang={alt}>{t.switchTo}</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('[data-header]');
+  const menu = document.querySelector('[data-menu]');
+  const openBtn = document.querySelector('[data-menu-open]');
+  const closeBtn = document.querySelector('[data-menu-close]');
+  const setOpen = (open) => {
+    menu.hidden = !open;
+    openBtn.setAttribute('aria-expanded', String(open));
+    document.documentElement.classList.toggle('menu-open', open);
+    (open ? closeBtn : openBtn).focus();
+  };
+  openBtn?.addEventListener('click', () => setOpen(true));
+  closeBtn?.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) setOpen(false); });
+
+  // Header transparente sobre el hero; pasa a fondo claro al bajar.
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

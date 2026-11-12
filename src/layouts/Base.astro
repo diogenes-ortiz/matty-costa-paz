@@ -1,0 +1,87 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, T, ROUTES } from '../data/site.js';
+
+const { lang = 'es', page = 'home', title, description } = Astro.props;
+const t = T[lang];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const u = (p) => base + p;
+const pageTitle = title ?? t.title;
+const pageDesc = description ?? t.description;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const alt = lang === 'es' ? 'en' : 'es';
+const altHref = new URL(u(ROUTES[alt][page] ?? ROUTES[alt].home), Astro.site).href;
+const esHref = new URL(u(ROUTES.es[page] ?? ''), Astro.site).href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${Astro.site}#matty`,
+      name: SITE.name,
+      jobTitle: lang === 'es' ? 'Diseñadora de interiores' : 'Interior designer',
+      email: `mailto:${SITE.email}`,
+      sameAs: [SITE.instagram, SITE.linkedin],
+      memberOf: [
+        { '@type': 'Organization', name: 'Leaders of Design Council' },
+        { '@type': 'Organization', name: 'DArA, Diseñadores Argentinos Asociados' },
+      ],
+    },
+    {
+      '@type': 'ProfessionalService',
+      name: `${SITE.name}, ${t.role}`,
+      url: new URL(u(''), Astro.site).href,
+      founder: { '@id': `${Astro.site}#matty` },
+      email: SITE.email,
+      areaServed: SITE.cities,
+      address: { '@type': 'PostalAddress', addressLocality: 'Buenos Aires', addressCountry: 'AR' },
+      sameAs: [SITE.instagram, SITE.linkedin],
+    },
+  ],
+};
+---
+<!doctype html>
+<html lang={t.lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDesc} />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang={lang} href={canonical} />
+  <link rel="alternate" hreflang={alt} href={altHref} />
+  <link rel="alternate" hreflang="x-default" href={esHref} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDesc} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content={t.locale} />
+  <link rel="icon" href={u('favicon.svg')} type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet" />
+  <script is:inline>document.documentElement.classList.add('js');</script>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</head>
+<body>
+  <a class="skip" href="#main">{lang === 'es' ? 'Saltar al contenido' : 'Skip to content'}</a>
+  <Header lang={lang} page={page} />
+  <main id="main"><slot /></main>
+  <Footer lang={lang} />
+  <script>
+    // Fundido suave al entrar en pantalla. Sin JS o con movimiento reducido, todo queda visible.
+    const els = document.querySelectorAll('[data-reveal]');
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      els.forEach((el) => io.observe(el));
+    } else {
+      els.forEach((el) => el.classList.add('is-in'));
+    }
+  </script>
+</body>
+</html>
