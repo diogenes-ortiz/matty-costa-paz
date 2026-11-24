@@ -3,7 +3,7 @@
 
 export const SITE = {
   name: 'Matty Costa Paz',
-  email: 'info@mattycostapaz.com.ar', // del sitio original (2024); [CONFIRMAR] que siga activo
+  email: 'mcostapaz@hotmail.com', // confirmado por el cliente 24/11/2026
   instagram: 'https://www.instagram.com/mattycostapaz/',
   linkedin: 'https://www.linkedin.com/in/matty-costa-paz-94992024/',
   cities: ['Buenos Aires', 'José Ignacio', 'París', 'Madrid'],
