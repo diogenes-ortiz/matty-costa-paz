@@ -1,0 +1,35 @@
+---
+// Redirecciones desde las direcciones del sitio anterior de mattycostapaz.com (WordPress, 2016-2020)
+// a las páginas nuevas. GitHub Pages no permite redirecciones 301, así que se usa
+// meta refresh inmediato + canonical, que Google trata como redirección permanente.
+export function getStaticPaths() {
+  const press = ['elle-decoration', 'dd-1', 'dd-2', 'dd-3', 'dd-4', 'dd-5', 'casa-foa-1', 'casa-foa-2', 'casa-foa-3',
+    'para-ti-deco-1', 'para-ti-deco-2', 'para-ti-deco-3', 'para-ti-deco-6', 'arq-1', 'arq-2', 'arq-3',
+    'varios-1-el-mercurio', 'varios-2-revista-viva', 'varios-3-para-ti-deco-plus'];
+  const map = {
+    'interior-design': 'proyectos/',
+    'projects': 'proyectos/',
+    'proyectos-2': 'proyectos/',
+    'portfolio': 'proyectos/',
+    'about': 'bio/',
+    'press': 'prensa/',
+    'contact': 'contacto/',
+    ...Object.fromEntries(press.map((p) => [`press/${p}`, 'prensa/'])),
+  };
+  return Object.entries(map).map(([legacy, to]) => ({ params: { legacy }, props: { to } }));
+}
+const base = import.meta.env.BASE_URL.replace(/[/]?$/, '/');
+const target = new URL(base + Astro.props.to, Astro.site).href;
+---
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8" />
+  <title>Matty Costa Paz</title>
+  <meta http-equiv="refresh" content={`0; url=${target}`} />
+  <link rel="canonical" href={target} />
+  <meta name="robots" content="noindex, follow" />
+  <script is:inline define:vars={{ target }}>location.replace(target);</script>
+</head>
+<body><a href={target}>Matty Costa Paz</a></body>
+</html>
