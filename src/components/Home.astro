@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { SITE, T, ROUTES, PROJECTS } from '../data/site.js';
-import { u, photo } from '../lib/helpers.js';
+import { u, photo, nth, altFor } from '../lib/helpers.js';
 import ProjectCard from './ProjectCard.astro';
 import PressLogos from './PressLogos.astro';
 
@@ -11,16 +11,11 @@ const r = ROUTES[lang];
 const es = lang === 'es';
 const P = Object.fromEntries(PROJECTS.map((p) => [p.slug, p]));
 const href = (slug) => u(`${r.projects}${slug}/`);
-const alt = (p, file) => { const g = p.gallery.find((x) => x[0] === file); return g ? g[es ? 1 : 2] : p.name[lang]; };
+const alt = (p, file, full = false) => altFor(p, file, lang, { full });
 
 // Portada: una foto amplia por obra
-const slides = [
-  [P['costa-esmeralda-2024'], '01.jpg'],
-  [P['piso-barrio-salamanca'], 'salon-sofa-marron.jpg'],
-  [P['costa-esmeralda-2025'], '01.jpg'],
-  [P['beach-house-jose-ignacio'], 'pf-01.jpg'],
-  [P['palacio-de-los-patos'], '01.jpg'],
-];
+const slides = ['costa-esmeralda-2024', 'piso-barrio-salamanca', 'costa-esmeralda-2025', 'beach-house-jose-ignacio', 'palacio-de-los-patos']
+  .map((s) => [P[s], P[s].cover]);
 // Fila 1: lo más reciente. Fila 2: más obras.
 const latest = ['costa-esmeralda-2025', 'costa-esmeralda-2024', 'retiro'].map((s) => P[s]);
 const more = ['adrogue-chico', 'botanico', 'beach-house-jose-ignacio'].map((s) => P[s]);
@@ -30,11 +25,11 @@ const capText = (p) => p.excerpt?.[lang] ?? [p.place[lang], p.year].filter(Boole
 <section class="hero" aria-roledescription="carousel" aria-label={es ? 'Obras destacadas' : 'Featured work'} data-hero>
   {slides.map(([p, file], i) => (
     <figure class:list={['slide', { 'is-active': i === 0 }]} data-slide aria-hidden={i === 0 ? undefined : 'true'}>
-      <Image src={photo(p.slug, file)} alt={alt(p, file)} widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={80}
+      <Image src={photo(p.slug, file)} alt={alt(p, file, true)} widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={80}
         loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} class="cover" />
       <figcaption class="wrap slide-cap">
         <a href={href(p.slug)}>
-          <h2 class="cap-title">{p.name[lang]}</h2>
+          <p class="cap-title">{p.name[lang]}</p>
           <p class="cap-text">{capText(p)}</p>
         </a>
       </figcaption>
@@ -46,8 +41,8 @@ const capText = (p) => p.excerpt?.[lang] ?? [p.place[lang], p.year].filter(Boole
 </section>
 
 <section class="statement wrap">
-  <p class="label center" data-reveal>Matty Costa Paz · {t.role}</p>
-  <h1 data-reveal>{t.statement}</h1>
+  <h1 class="label center" data-reveal>Matty Costa Paz · {es ? 'Interiorista en Buenos Aires' : 'Interior designer in Buenos Aires'}</h1>
+  <p class="statement-title" data-reveal>{t.statement}</p>
   <p class="intro" data-reveal>{t.intro}</p>
   <ul class="cities label" data-reveal>{SITE.cities.map((c) => <li>{c}</li>)}</ul>
 </section>
@@ -62,7 +57,7 @@ const capText = (p) => p.excerpt?.[lang] ?? [p.place[lang], p.year].filter(Boole
 </section>
 
 <section class="feature" aria-labelledby="feat">
-  <Image src={photo(madrid.slug, 'sala-estar-cerramiento.jpg')} alt={alt(madrid, 'sala-estar-cerramiento.jpg')}
+  <Image src={photo(madrid.slug, nth(madrid, 5))} alt={alt(madrid, nth(madrid, 5))}
     widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={78} loading="lazy" class="cover" />
   <div class="feature-cap wrap">
     <p class="label light">{t.featured} · {madrid.place[lang]}</p>
@@ -91,7 +86,7 @@ const capText = (p) => p.excerpt?.[lang] ?? [p.place[lang], p.year].filter(Boole
     <h2 class="band-title" id="bio">{t.studioLabel}</h2>
     <div class="studio-grid">
       <div class="studio-media" data-reveal>
-        <Image src={photo('palacio-de-los-patos', '02.jpg')} alt={alt(P['palacio-de-los-patos'], '02.jpg')}
+        <Image src={photo('palacio-de-los-patos', nth(P['palacio-de-los-patos'], 1))} alt={alt(P['palacio-de-los-patos'], nth(P['palacio-de-los-patos'], 1))}
           widths={[400, 600]} sizes="(min-width: 960px) 40vw, 100vw" format="webp" quality={80} loading="lazy" />
       </div>
       <div data-reveal>

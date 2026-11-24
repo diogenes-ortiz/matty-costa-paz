@@ -1,5 +1,23 @@
 ---
 import Base from '../../layouts/Base.astro';
 import C from '../../components/PressPage.astro';
+import { T, ROUTES, PROJECTS, PRESS } from '../../data/site.js';
+import { photo, altFor } from '../../lib/helpers.js';
+import { getImage } from 'astro:assets';
+const lang = 'en';
+const t = T[lang];
+const r = ROUTES[lang];
+const abs = (p) => new URL(import.meta.env.BASE_URL.replace(/[/]?$/, '/') + p, Astro.site).href;
+const extra = [{
+  '@type': 'ItemList', name: t.seo.press[0],
+  itemListElement: PRESS.map((n, i) => ({
+    '@type': 'ListItem', position: i + 1,
+    item: {
+      '@type': 'Article', headline: n.title, publisher: { '@type': 'Organization', name: n.media },
+      ...(n.url ? { url: n.url } : {}), ...(n.year ? { datePublished: String(n.year) } : {}),
+      about: { '@id': abs('') + '#matty' },
+    },
+  })),
+}];
 ---
-<Base lang="en" page="press" title="Press | Matty Costa Paz" description="Articles and features on Matty Costa Paz in Elle Decor, Casa Vogue, Infobae, Elle, AD, La Nación and more."><C lang="en" /></Base>
+<Base lang={lang} page="press" pageType="CollectionPage" crumbs={[[t.nav.press, r.press]]} extraSchema={extra}><C lang={lang} /></Base>

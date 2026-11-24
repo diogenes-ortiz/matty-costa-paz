@@ -23,7 +23,7 @@ const t = T[lang];
         const w = Math.round((img.width / img.height) * Math.min(n.h, 28));
         const inner = (
           <>
-            <span class="pl-logo"><img src={img.src} alt="" width={w} height={Math.min(n.h, 28)} loading="lazy" style={`height:${Math.min(n.h, 28)}px`} /></span>
+            <span class="pl-logo"><img src={img.src} alt={`${lang === 'es' ? 'Logo de' : 'Logo of'} ${n.media}`} width={w} height={Math.min(n.h, 28)} loading="lazy" style={`height:${Math.min(n.h, 28)}px`} /></span>
             <span class="pl-main">
               <span class="label">{n.media}{n.year ? ` · ${n.year}` : ` · ${t.pending}`}</span>
               <span class="pl-title">{n.title}</span>

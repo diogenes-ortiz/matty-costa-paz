@@ -1,68 +1,127 @@
 ---
 import '../styles/global.css';
+import { getImage } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE, T, ROUTES } from '../data/site.js';
+import { SITE, T, ROUTES, PROJECTS } from '../data/site.js';
+import { photo, altFor } from '../lib/helpers.js';
 
-const { lang = 'es', page = 'home', title, description, altPath, overHero = false, image } = Astro.props;
+const {
+  lang = 'es', page = 'home', title, description, altPath, overHero = false,
+  image, imageAlt,            // imagen para redes (ruta ya procesada) y su texto
+  pageType = 'WebPage',       // WebPage | CollectionPage | ProfilePage | ContactPage
+  crumbs = [],                // [[nombre, ruta relativa a base], ...] sin incluir Inicio
+  extraSchema = [],           // nodos schema.org propios de la página
+} = Astro.props;
 const t = T[lang];
+const es = lang === 'es';
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const u = (p) => base + p;
-const pageTitle = title ?? t.title;
-const pageDesc = description ?? t.description;
-const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const alt = lang === 'es' ? 'en' : 'es';
-const altHref = new URL(u(altPath ?? ROUTES[alt][page] ?? ROUTES[alt].home), Astro.site).href;
-const esHref = lang === 'es' ? canonical : altHref;
+const abs = (p) => new URL(p, Astro.site).href;
+const pageTitle = title ?? t.seo?.[page]?.[0] ?? t.title;
+const pageDesc = description ?? t.seo?.[page]?.[1] ?? t.description;
+const canonical = abs(Astro.url.pathname);
+const alt = es ? 'en' : 'es';
+const altHref = abs(u(altPath ?? ROUTES[alt][page] ?? ROUTES[alt].home));
+const esHref = es ? canonical : altHref;
+const enHref = es ? altHref : canonical;
+
+// Imagen por defecto para redes: portada de la primera obra
+const def = PROJECTS[0];
+const defImg = await getImage({ src: photo(def.slug, def.cover), width: 1200, format: 'jpg', quality: 80 });
+const ogImage = abs(image ?? defImg.src);
+const ogAlt = imageAlt ?? altFor(def, def.cover, lang, { full: true });
 
 const fontCss = `@font-face{font-family:"Avant Garde MCP";src:local("ITC Avant Garde Gothic"),local("ITC Avant Garde Gothic Pro"),url("${u("fonts/texgyreadventor-regular.otf")}") format("opentype");font-weight:400;font-display:swap}@font-face{font-family:"Avant Garde MCP";src:local("ITC Avant Garde Gothic Pro Demi"),url("${u("fonts/texgyreadventor-bold.otf")}") format("opentype");font-weight:700;font-display:swap}`;
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Person',
-      '@id': `${Astro.site}#matty`,
-      name: SITE.name,
-      jobTitle: lang === 'es' ? 'Interiorista' : 'Interior designer',
-      email: `mailto:${SITE.email}`,
-      sameAs: [SITE.instagram, SITE.linkedin],
-      memberOf: [
-        { '@type': 'Organization', name: 'Design Leadership Network' },
-        { '@type': 'Organization', name: 'DINA, Diseñadores Nacionales Asociados' },
-        { '@type': 'Organization', name: 'DArA, Diseñadores Argentinos Asociados' },
-      ],
-    },
-    {
-      '@type': 'ProfessionalService',
-      name: `${SITE.name}, ${t.role}`,
-      url: new URL(u(''), Astro.site).href,
-      founder: { '@id': `${Astro.site}#matty` },
-      email: SITE.email,
-      areaServed: SITE.cities,
-      address: { '@type': 'PostalAddress', addressLocality: 'Buenos Aires', addressCountry: 'AR' },
-      sameAs: [SITE.instagram, SITE.linkedin],
-    },
-  ],
-};
+// ---------- Datos estructurados (schema.org) ----------
+const siteRoot = abs(u(''));
+const ID = { person: `${siteRoot}#matty`, studio: `${siteRoot}#estudio`, site: `${siteRoot}#website` };
+const knows = es
+  ? ['Diseño de interiores', 'Arquitectura de interiores', 'Interiorismo residencial', 'Diseño del paisaje', 'Dirección creativa']
+  : ['Interior design', 'Interior architecture', 'Residential interior design', 'Landscape design', 'Creative direction'];
+const areas = ['Buenos Aires', 'Provincia de Buenos Aires', 'Costa Esmeralda', 'José Ignacio', 'Madrid'].map((name) => ({ '@type': 'Place', name }));
+
+const graph = [
+  {
+    '@type': 'WebSite', '@id': ID.site, url: siteRoot, name: SITE.name,
+    inLanguage: ['es', 'en'], publisher: { '@id': ID.person },
+  },
+  {
+    '@type': 'Person', '@id': ID.person, name: SITE.name, url: siteRoot,
+    jobTitle: es ? 'Interiorista' : 'Interior designer',
+    description: es
+      ? 'Interiorista especializada en arquitectura de interiores, con más de treinta años de trayectoria. Basada en Buenos Aires, con proyectos en Argentina, Uruguay y España.'
+      : 'Interior designer specialising in interior architecture, with over thirty years of work. Based in Buenos Aires, with projects in Argentina, Uruguay and Spain.',
+    email: `mailto:${SITE.email}`,
+    address: { '@type': 'PostalAddress', addressLocality: 'Buenos Aires', addressCountry: 'AR' },
+    knowsAbout: knows,
+    worksFor: { '@id': ID.studio },
+    memberOf: [
+      { '@type': 'Organization', name: 'Design Leadership Network' },
+      { '@type': 'Organization', name: 'DINA, Diseñadores Nacionales Asociados' },
+      { '@type': 'Organization', name: 'DArA, Diseñadores Argentinos Asociados' },
+    ],
+    sameAs: [SITE.instagram, SITE.linkedin],
+  },
+  {
+    '@type': 'ProfessionalService', '@id': ID.studio,
+    name: `${SITE.name}, ${es ? 'interiorismo y arquitectura de interiores' : 'interior design and interior architecture'}`,
+    url: siteRoot, image: abs(defImg.src), email: SITE.email,
+    description: t.seo.home[1],
+    founder: { '@id': ID.person },
+    address: { '@type': 'PostalAddress', addressLocality: 'Buenos Aires', addressCountry: 'AR' },
+    areaServed: areas, knowsAbout: knows,
+    sameAs: [SITE.instagram, SITE.linkedin],
+  },
+  {
+    '@type': pageType, '@id': `${canonical}#webpage`, url: canonical, name: pageTitle, description: pageDesc,
+    inLanguage: lang, isPartOf: { '@id': ID.site }, about: { '@id': ID.person },
+    primaryImageOfPage: { '@type': 'ImageObject', url: ogImage, caption: ogAlt },
+    ...(pageType === 'ProfilePage' ? { mainEntity: { '@id': ID.person } } : {}),
+  },
+];
+if (crumbs.length) {
+  graph.push({
+    '@type': 'BreadcrumbList', '@id': `${canonical}#breadcrumb`,
+    itemListElement: [[es ? 'Inicio' : 'Home', ROUTES[lang].home], ...crumbs].map(([name, path], i) => ({
+      '@type': 'ListItem', position: i + 1, name, item: abs(u(path)),
+    })),
+  });
+  graph[3].breadcrumb = { '@id': `${canonical}#breadcrumb` };
+}
+graph.push(...extraSchema);
+const schema = { '@context': 'https://schema.org', '@graph': graph };
 ---
 <!doctype html>
-<html lang={t.lang}>
+<html lang={es ? 'es-AR' : 'en'}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{pageTitle}</title>
   <meta name="description" content={pageDesc} />
+  <meta name="author" content="Matty Costa Paz" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href={canonical} />
-  <link rel="alternate" hreflang={lang} href={canonical} />
-  <link rel="alternate" hreflang={alt} href={altHref} />
+  <link rel="alternate" hreflang="es" href={esHref} />
+  <link rel="alternate" hreflang="en" href={enHref} />
   <link rel="alternate" hreflang="x-default" href={esHref} />
+  <link rel="sitemap" type="application/xml" href={u('sitemap.xml')} />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Matty Costa Paz" />
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={pageDesc} />
   <meta property="og:url" content={canonical} />
   <meta property="og:locale" content={t.locale} />
-  {image && <meta property="og:image" content={new URL(image, Astro.site).href} />}
+  <meta property="og:locale:alternate" content={T[alt].locale} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:alt" content={ogAlt} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDesc} />
+  <meta name="twitter:image" content={ogImage} />
+  <meta name="theme-color" content="#F7F5EF" />
   <link rel="preload" href={u('fonts/texgyreadventor-regular.otf')} as="font" type="font/otf" crossorigin />
   <link rel="icon" href={u('favicon.svg')} type="image/svg+xml" />
   <style is:inline set:html={fontCss}></style>

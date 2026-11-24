@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL.replace(/[/]?$/, '/');
+---
+<Base lang="es" page="home" title="Página no encontrada | Matty Costa Paz" description="La página que buscás no existe. Conocé los proyectos de interiorismo de Matty Costa Paz.">
+  <section class="page-head wrap" style="min-height:60vh">
+    <p class="label">404</p>
+    <h1 class="page-lead" style="margin-top:24px">No encontré esta página.</h1>
+    <p class="page-intro" style="margin-top:20px">Puede que la dirección haya cambiado. Estas son las secciones del sitio:</p>
+    <div class="contact-links" style="margin-top:40px">
+      <a class="link-line" href={base + 'proyectos/'}>Proyectos</a>
+      <a class="link-line" href={base + 'bio/'}>Bio</a>
+      <a class="link-line" href={base + 'prensa/'}>Prensa</a>
+      <a class="link-line" href={base + 'contacto/'}>Contacto</a>
+    </div>
+  </section>
+</Base>

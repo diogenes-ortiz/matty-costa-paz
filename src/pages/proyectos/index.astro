@@ -1,5 +1,17 @@
 ---
 import Base from '../../layouts/Base.astro';
 import C from '../../components/ProjectsPage.astro';
+import { T, ROUTES, PROJECTS, PRESS } from '../../data/site.js';
+import { photo, altFor } from '../../lib/helpers.js';
+import { getImage } from 'astro:assets';
+const lang = 'es';
+const t = T[lang];
+const r = ROUTES[lang];
+const abs = (p) => new URL(import.meta.env.BASE_URL.replace(/[/]?$/, '/') + p, Astro.site).href;
+const items = await Promise.all(PROJECTS.map(async (p, i) => ({
+  '@type': 'ListItem', position: i + 1, url: abs(r.projects + p.slug + '/'), name: p.name[lang],
+  image: abs((await getImage({ src: photo(p.slug, p.cover), width: 800, format: 'jpg' })).src),
+})));
+const extra = [{ '@type': 'ItemList', name: t.seo.projects[0], numberOfItems: PROJECTS.length, itemListElement: items }];
 ---
-<Base lang="es" page="projects" title="Proyectos | Matty Costa Paz" description="Proyectos de diseño de interiores de Matty Costa Paz: residencias, oficinas corporativas y espacios para Casa FOA en Argentina, Uruguay y Europa."><C lang="es" /></Base>
+<Base lang={lang} page="projects" pageType="CollectionPage" crumbs={[[t.nav.projects, r.projects]]} extraSchema={extra}><C lang={lang} /></Base>

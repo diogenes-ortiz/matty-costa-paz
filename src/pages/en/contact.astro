@@ -1,5 +1,11 @@
 ---
 import Base from '../../layouts/Base.astro';
 import C from '../../components/ContactPage.astro';
+import { T, ROUTES } from '../../data/site.js';
+const lang = 'en';
+const t = T[lang];
+const r = ROUTES[lang];
+const abs = (p) => new URL(import.meta.env.BASE_URL.replace(/[/]?$/, '/') + p, Astro.site).href;
+
 ---
-<Base lang="en" page="contact" title="Contact | Matty Costa Paz" description="Contact interior designer Matty Costa Paz by email, Instagram or LinkedIn."><C lang="en" /></Base>
+<Base lang={lang} page="contact" pageType="ContactPage" crumbs={[[t.nav.contact, r.contact]]}><C lang={lang} /></Base>

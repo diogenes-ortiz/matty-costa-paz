@@ -1,8 +1,9 @@
 ---
 // Bio: texto oficial de Matty (Bio.pdf, 18/11/2026), pasado a primera persona.
 import { Image } from 'astro:assets';
-import { T, ROUTES } from '../data/site.js';
-import { u, photo } from '../lib/helpers.js';
+import { T, ROUTES, PROJECTS } from '../data/site.js';
+import { u, photo, altFor } from '../lib/helpers.js';
+const pdp = PROJECTS.find((p) => p.slug === 'palacio-de-los-patos');
 const { lang = 'es' } = Astro.props;
 const t = T[lang];
 const es = lang === 'es';
@@ -43,7 +44,7 @@ const publications = ['AD Italia', 'Architectural Digest', 'Casa Vogue', 'Elle D
 <section class="wrap studio-page">
   <div class="studio-media" data-reveal>
     <!-- [COMPLETAR] retrato de Matty; por ahora, una obra -->
-    <Image src={photo('palacio-de-los-patos', '01.jpg')} alt={es ? 'Living blanco con ventanas en arco y grandes obras de arte, Palacio de los Patos' : 'White living room with arched windows and large artworks, Palacio de los Patos'}
+    <Image src={photo(pdp.slug, pdp.cover)} alt={altFor(pdp, pdp.cover, lang, { full: true })}
       widths={[600, 1000]} sizes="(min-width: 960px) 40vw, 100vw" format="webp" quality={80} loading="eager" />
   </div>
   <div class="studio-copy" data-reveal>

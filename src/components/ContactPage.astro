@@ -1,7 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-import { SITE, T } from '../data/site.js';
-import { photo } from '../lib/helpers.js';
+import { SITE, T, PROJECTS } from '../data/site.js';
+import { photo, nth, altFor } from '../lib/helpers.js';
+const ji = PROJECTS.find((p) => p.slug === 'beach-house-jose-ignacio');
 const { lang = 'es' } = Astro.props;
 const t = T[lang];
 const es = lang === 'es';
@@ -24,7 +25,7 @@ const links = [
     <p class="label" style="margin-top:40px">{SITE.cities.join('  ·  ')}</p>
   </div>
   <div class="contact-media">
-    <Image src={photo('beach-house-jose-ignacio', 'galeria-entrada.jpg')} alt={es ? 'Celosías de madera y sillas de mimbre en la entrada de la casa de José Ignacio' : 'Timber lattices and wicker chairs at the entrance of the José Ignacio house'}
+    <Image src={photo(ji.slug, nth(ji, 4))} alt={altFor(ji, nth(ji, 4), lang, { full: true })}
       widths={[400, 700]} sizes="(min-width: 960px) 35vw, 100vw" format="webp" quality={80} loading="eager" />
   </div>
 </section>

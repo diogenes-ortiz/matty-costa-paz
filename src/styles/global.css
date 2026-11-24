@@ -100,7 +100,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 /* ---------- Posicionamiento ---------- */
 .statement { text-align: center; padding-block: clamp(96px, 14vw, 180px); }
-.statement h1 { font-size: clamp(26px, 3.8vw, 52px); line-height: 1.18; letter-spacing: .005em; max-width: 20ch; margin: 28px auto 32px; }
+.statement h1.label { font-size: 10.5px; margin: 0; }
+.statement .statement-title { font-size: clamp(26px, 3.8vw, 52px); line-height: 1.18; letter-spacing: .005em; max-width: 20ch; margin: 28px auto 32px; }
 .statement .intro { max-width: 46ch; margin-inline: auto; color: var(--muted); }
 .cities { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px; margin-top: 28px; }
 
@@ -279,3 +280,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .contact-list a:hover { color: var(--muted); }
 .contact-media { max-width: 420px; }
 @media (min-width: 960px) { .contact-page { grid-template-columns: 7fr 4fr; gap: 8vw; } .contact-media { justify-self: end; } }
+
+/* Texto solo para lectores de pantalla y buscadores */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.project-intro { font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5; margin-bottom: 32px; max-width: 40ch; }
+.project-info.no-body { display: block; max-width: 560px; margin-inline: auto; }

@@ -10,7 +10,8 @@ const t = T[lang];
   <p class="page-intro">{t.projectsIntro}</p>
 </section>
 
-<section class="wrap projects-grid-wrap">
+<section class="wrap projects-grid-wrap" aria-labelledby="obras-t">
+  <h2 id="obras-t" class="sr-only">{lang === 'es' ? 'Obras realizadas de diseño de interiores' : 'Completed interior design work'}</h2>
   <ul class="projects-grid">
     {PROJECTS.map((p) => <ProjectCard p={p} lang={lang} excerpt={false} />)}
   </ul>

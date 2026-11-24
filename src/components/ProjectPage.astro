@@ -2,7 +2,7 @@
 // Página de proyecto: portada, ficha, texto, galería y proyecto siguiente a todo el ancho.
 import { Image } from 'astro:assets';
 import { T, ROUTES, PROJECTS, PRESS } from '../data/site.js';
-import { u, photo } from '../lib/helpers.js';
+import { u, photo, altFor, factualIntro } from '../lib/helpers.js';
 
 const { p, lang = 'es' } = Astro.props;
 const t = T[lang];
@@ -10,7 +10,7 @@ const r = ROUTES[lang];
 const es = lang === 'es';
 const i = PROJECTS.findIndex((x) => x.slug === p.slug);
 const next = PROJECTS[(i + 1) % PROJECTS.length];
-const alt = (proj, file) => { const g = proj.gallery.find((x) => x[0] === file); return g ? g[es ? 1 : 2] : proj.name[lang]; };
+const alt = (proj, file, full = false) => altFor(proj, file, lang, { full });
 const press = (p.press || []).map((id) => PRESS.find((x) => x.id === id)).filter(Boolean);
 const gallery = p.gallery.filter(([f]) => f !== p.cover);
 
@@ -23,7 +23,7 @@ const ficha = [
 ].filter(Boolean);
 ---
 <section class="hero project-hero">
-  <Image src={photo(p.slug, p.cover)} alt={alt(p, p.cover)} widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={80}
+  <Image src={photo(p.slug, p.cover)} alt={alt(p, p.cover, true)} widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={80}
     loading="eager" fetchpriority="high" class="cover" />
   <div class="wrap slide-cap">
     <p class="label light">{p.place[lang]}{p.year ? ` · ${p.year}` : ''}</p>
@@ -31,7 +31,9 @@ const ficha = [
   </div>
 </section>
 
-<section class:list={['wrap project-info', { 'no-body': !p.body }]}>
+<section class:list={['wrap project-info', { 'no-body': !p.body }]} aria-labelledby="ficha-t">
+  <h2 id="ficha-t" class="sr-only">{es ? `Ficha del proyecto ${p.name.es}` : `${p.name.en} project details`}</h2>
+  {!p.body && <p class="project-intro" data-reveal>{factualIntro(p, lang)}</p>}
   <dl class="ficha" data-reveal>
     {ficha.map(([k, v]) => (<div><dt class="label">{k}</dt><dd>{v}</dd></div>))}
     {press.length > 0 && (
@@ -45,7 +47,8 @@ const ficha = [
   )}
 </section>
 
-<section class="wrap gallery" aria-label={es ? 'Galería' : 'Gallery'}>
+<section class="wrap gallery" aria-labelledby="gal-t">
+  <h2 id="gal-t" class="sr-only">{es ? `Fotos de ${p.name.es}, ${p.place.es}` : `Photos of ${p.name.en}, ${p.place.en}`}</h2>
   {gallery.map(([file]) => {
     const img = photo(p.slug, file);
     const portrait = img.height > img.width;
