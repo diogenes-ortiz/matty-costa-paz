@@ -4,7 +4,7 @@ Portfolio de Matty Costa Paz, diseñadora de interiores. Astro, español e ingl�
 
 ```bash
 npm install
-npm run dev     # http://localhost:4340/matty-costa-paz/
+npm run dev     # http://localhost:4340/
 npm run build
 ```
 

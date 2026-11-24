@@ -1,10 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Publicado en GitHub Pages. Al conectar un dominio propio: cambiar site y quitar base.
+// Publicado en GitHub Pages con dominio propio (public/CNAME).
 export default defineConfig({
-  site: 'https://diogenes-ortiz.github.io',
-  base: '/matty-costa-paz',
+  site: 'https://mattycostapaz.com',
   trailingSlash: 'always',
   server: { port: 4340 },
 });
