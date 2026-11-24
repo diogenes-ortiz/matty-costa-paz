@@ -1,22 +1,22 @@
 ---
-// Tarjeta de proyecto: foto con su proporción real, título, bajada y "tipo | lugar | año".
+// Tarjeta de proyecto: foto con su proporción real, título, bajada (si existe) y "lugar | año".
 import { Image } from 'astro:assets';
-import { ROUTES, CATEGORIES } from '../data/site.js';
+import { ROUTES } from '../data/site.js';
 import { u, photo } from '../lib/helpers.js';
 
 const { p, lang = 'es', excerpt = true } = Astro.props;
 const img = photo(p.slug, p.card);
 const g = p.gallery.find((x) => x[0] === p.card);
-const meta = [p.type[lang], p.place[lang], p.year].filter(Boolean).join('  |  ');
+const meta = [p.place[lang], p.year].filter(Boolean).join('  |  ');
 ---
-<li class="card" style={`--ar:${(img.width / img.height).toFixed(3)}`} data-cats={p.categories.join(' ')} data-reveal>
+<li class="card" style={`--ar:${(img.width / img.height).toFixed(3)}`} data-reveal>
   <a href={u(`${ROUTES[lang].projects}${p.slug}/`)}>
     <div class="card-media">
-      <Image src={img} alt={g ? g[lang === 'es' ? 1 : 2] : p.name[lang]} widths={[480, 800, 1200]}
-        sizes="(min-width: 720px) 50vw, 100vw" format="webp" quality={78} loading="lazy" />
+      <Image src={img} alt={g ? g[lang === 'es' ? 1 : 2] : p.name[lang]} widths={[400, 700, 1000]}
+        sizes="(min-width: 1200px) 33vw, (min-width: 720px) 50vw, 100vw" format="webp" quality={80} loading="lazy" />
     </div>
     <h3 class="card-title">{p.name[lang]}</h3>
-    {excerpt && <p class="card-text">{p.excerpt[lang]}</p>}
+    {excerpt && p.excerpt && <p class="card-text">{p.excerpt[lang]}</p>}
     <p class="card-meta">{meta}</p>
   </a>
 </li>

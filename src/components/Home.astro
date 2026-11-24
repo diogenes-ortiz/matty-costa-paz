@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
-import { SITE, T, ROUTES, PROJECTS, PRESS_LOGOS } from '../data/site.js';
-import { u, photo, logo } from '../lib/helpers.js';
+import { SITE, T, ROUTES, PROJECTS } from '../data/site.js';
+import { u, photo } from '../lib/helpers.js';
 import ProjectCard from './ProjectCard.astro';
 import PressLogos from './PressLogos.astro';
 
@@ -13,23 +13,29 @@ const P = Object.fromEntries(PROJECTS.map((p) => [p.slug, p]));
 const href = (slug) => u(`${r.projects}${slug}/`);
 const alt = (p, file) => { const g = p.gallery.find((x) => x[0] === file); return g ? g[es ? 1 : 2] : p.name[lang]; };
 
+// Portada: una foto amplia por obra
 const slides = [
+  [P['costa-esmeralda-2024'], '01.jpg'],
   [P['piso-barrio-salamanca'], 'salon-sofa-marron.jpg'],
-  [P['beach-house-jose-ignacio'], 'fachada.jpg'],
-  [P['piso-barrio-salamanca'], 'salon-comedor.jpg'],
+  [P['costa-esmeralda-2025'], '01.jpg'],
+  [P['beach-house-jose-ignacio'], 'pf-01.jpg'],
+  [P['palacio-de-los-patos'], '01.jpg'],
 ];
+// Fila 1: lo más reciente. Fila 2: más obras.
+const latest = ['costa-esmeralda-2025', 'costa-esmeralda-2024', 'retiro'].map((s) => P[s]);
+const more = ['adrogue-chico', 'botanico', 'beach-house-jose-ignacio'].map((s) => P[s]);
 const madrid = P['piso-barrio-salamanca'];
+const capText = (p) => p.excerpt?.[lang] ?? [p.place[lang], p.year].filter(Boolean).join(' · ');
 ---
-<!-- Portada: fotos a pantalla completa que rotan, con el proyecto superpuesto -->
-<section class="hero" aria-roledescription="carousel" aria-label={es ? 'Proyectos destacados' : 'Featured projects'} data-hero>
+<section class="hero" aria-roledescription="carousel" aria-label={es ? 'Obras destacadas' : 'Featured work'} data-hero>
   {slides.map(([p, file], i) => (
     <figure class:list={['slide', { 'is-active': i === 0 }]} data-slide aria-hidden={i === 0 ? undefined : 'true'}>
-      <Image src={photo(p.slug, file)} alt={alt(p, file)} widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={78}
+      <Image src={photo(p.slug, file)} alt={alt(p, file)} widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={80}
         loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} class="cover" />
       <figcaption class="wrap slide-cap">
         <a href={href(p.slug)}>
           <h2 class="cap-title">{p.name[lang]}</h2>
-          <p class="cap-text">{p.excerpt[lang]}</p>
+          <p class="cap-text">{capText(p)}</p>
         </a>
       </figcaption>
     </figure>
@@ -51,10 +57,7 @@ const madrid = P['piso-barrio-salamanca'];
   <span class="vword vword-r" aria-hidden="true">{t.vertical}</span>
   <div class="wrap">
     <h2 class="band-title" id="latest">{t.latest}</h2>
-    <ul class="row">
-      {PROJECTS.map((p) => <ProjectCard p={p} lang={lang} />)}
-    </ul>
-    <div class="band-foot"><a class="link-line" href={u(r.projects)}>{t.allProjects}</a></div>
+    <ul class="row">{latest.map((p) => <ProjectCard p={p} lang={lang} />)}</ul>
   </div>
 </section>
 
@@ -62,7 +65,7 @@ const madrid = P['piso-barrio-salamanca'];
   <Image src={photo(madrid.slug, 'sala-estar-cerramiento.jpg')} alt={alt(madrid, 'sala-estar-cerramiento.jpg')}
     widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={78} loading="lazy" class="cover" />
   <div class="feature-cap wrap">
-    <p class="label light">{t.featured}</p>
+    <p class="label light">{t.featured} · {madrid.place[lang]}</p>
     <h2 id="feat" class="cap-title">{madrid.name[lang]}</h2>
     <p class="cap-text">{es
       ? 'Separé la sala íntima con un cerramiento de aluminio bronce y vidrio, sin cortar la continuidad visual: la idea fue no generar divisiones, sino conexiones.'
@@ -71,15 +74,25 @@ const madrid = P['piso-barrio-salamanca'];
   </div>
 </section>
 
-<section class="band" aria-labelledby="est">
+<section class="band" aria-labelledby="more">
+  <span class="vword vword-l" aria-hidden="true">{t.verticalMore}</span>
+  <span class="vword vword-r" aria-hidden="true">{t.verticalMore}</span>
+  <div class="wrap">
+    <h2 class="band-title" id="more">{t.more}</h2>
+    <ul class="row">{more.map((p) => <ProjectCard p={p} lang={lang} />)}</ul>
+    <div class="band-foot"><a class="link-line" href={u(r.projects)}>{t.allProjects}</a></div>
+  </div>
+</section>
+
+<section class="band studio-band" aria-labelledby="bio">
   <span class="vword vword-l" aria-hidden="true">{t.verticalStudio}</span>
   <span class="vword vword-r" aria-hidden="true">{t.verticalStudio}</span>
   <div class="wrap">
-    <h2 class="band-title" id="est">{t.studioLabel}</h2>
+    <h2 class="band-title" id="bio">{t.studioLabel}</h2>
     <div class="studio-grid">
       <div class="studio-media" data-reveal>
-        <Image src={photo(madrid.slug, 'escritorio-trabajo.jpg')} alt={alt(madrid, 'escritorio-trabajo.jpg')}
-          widths={[480, 800, 1100]} sizes="(min-width: 960px) 40vw, 100vw" format="webp" quality={78} loading="lazy" />
+        <Image src={photo('palacio-de-los-patos', '02.jpg')} alt={alt(P['palacio-de-los-patos'], '02.jpg')}
+          widths={[400, 600]} sizes="(min-width: 960px) 40vw, 100vw" format="webp" quality={80} loading="lazy" />
       </div>
       <div data-reveal>
         <p class="studio-text">{t.studioText}</p>

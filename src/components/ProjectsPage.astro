@@ -1,37 +1,17 @@
 ---
-import { T, PROJECTS, CATEGORIES } from '../data/site.js';
+// Todas las obras en una sola grilla, sin categorías (pedido de Matty: no encasillarse).
+import { T, PROJECTS } from '../data/site.js';
 import ProjectCard from './ProjectCard.astro';
 const { lang = 'es' } = Astro.props;
 const t = T[lang];
-const cats = Object.keys(CATEGORIES);
 ---
 <section class="page-head wrap">
   <h1 class="band-title">{t.projectsTitle}</h1>
   <p class="page-intro">{t.projectsIntro}</p>
-  <div class="filters" role="toolbar" aria-label={lang === 'es' ? 'Filtrar proyectos' : 'Filter projects'} data-filters>
-    <button type="button" class="filter is-active" data-filter="all" aria-pressed="true">{t.all}</button>
-    {cats.map((c) => <button type="button" class="filter" data-filter={c} aria-pressed="false">{CATEGORIES[c][lang]}</button>)}
-  </div>
 </section>
 
 <section class="wrap projects-grid-wrap">
-  <ul class="projects-grid" data-grid>
-    {PROJECTS.map((p) => <ProjectCard p={p} lang={lang} />)}
+  <ul class="projects-grid">
+    {PROJECTS.map((p) => <ProjectCard p={p} lang={lang} excerpt={false} />)}
   </ul>
-  <p class="empty muted" hidden data-empty>{t.emptyCat}</p>
 </section>
-
-<script>
-  const bar = document.querySelector('[data-filters]');
-  const cards = [...document.querySelectorAll('[data-grid] .card')];
-  const empty = document.querySelector('[data-empty]');
-  bar?.addEventListener('click', (e) => {
-    const b = e.target.closest('[data-filter]');
-    if (!b) return;
-    bar.querySelectorAll('[data-filter]').forEach((x) => { x.classList.toggle('is-active', x === b); x.setAttribute('aria-pressed', String(x === b)); });
-    const f = b.dataset.filter;
-    let n = 0;
-    cards.forEach((c) => { const show = f === 'all' || c.dataset.cats.split(' ').includes(f); c.hidden = !show; if (show) n++; });
-    empty.hidden = n > 0;
-  });
-</script>

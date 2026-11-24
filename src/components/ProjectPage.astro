@@ -17,30 +17,32 @@ const gallery = p.gallery.filter(([f]) => f !== p.cover);
 const ficha = [
   [t.fLocation, p.place[lang]],
   [t.fYear, p.year ?? t.pending],
-  [t.fType, p.type[lang]],
+  [t.fScope, p.scope[lang]],
   p.area ? [t.fArea, p.area[lang]] : null,
-  [t.fPhoto, p.credit ?? t.pending],
+  p.credit ? [t.fPhoto, p.credit] : null,
 ].filter(Boolean);
 ---
 <section class="hero project-hero">
   <Image src={photo(p.slug, p.cover)} alt={alt(p, p.cover)} widths={[800, 1280, 1920]} sizes="100vw" format="webp" quality={80}
     loading="eager" fetchpriority="high" class="cover" />
   <div class="wrap slide-cap">
-    <p class="label light">{p.type[lang]} · {p.place[lang]}</p>
+    <p class="label light">{p.place[lang]}{p.year ? ` · ${p.year}` : ''}</p>
     <h1 class="cap-title" style="margin-top:14px">{p.name[lang]}</h1>
   </div>
 </section>
 
-<section class="wrap project-info">
+<section class:list={['wrap project-info', { 'no-body': !p.body }]}>
   <dl class="ficha" data-reveal>
     {ficha.map(([k, v]) => (<div><dt class="label">{k}</dt><dd>{v}</dd></div>))}
     {press.length > 0 && (
       <div><dt class="label">{t.fPress}</dt><dd>{press.map((n, j) => (<>{j > 0 && ', '}{n.url ? <a href={n.url} target="_blank" rel="noopener">{n.media}</a> : n.media}</>))}</dd></div>
     )}
   </dl>
-  <div class="project-body" data-reveal>
-    {p.body[lang].map((para, j) => <p class:list={{ lead: j === 0 }}>{para}</p>)}
-  </div>
+  {p.body && (
+    <div class="project-body" data-reveal>
+      {p.body[lang].map((para, j) => <p class:list={{ lead: j === 0 }}>{para}</p>)}
+    </div>
+  )}
 </section>
 
 <section class="wrap gallery" aria-label={es ? 'Galería' : 'Gallery'}>
@@ -48,8 +50,8 @@ const ficha = [
     const img = photo(p.slug, file);
     const portrait = img.height > img.width;
     return (
-      <figure class:list={['g-item', portrait ? 'is-portrait' : 'is-landscape']} data-reveal>
-        <Image src={img} alt={alt(p, file)} widths={[600, 1000, 1600]} sizes={portrait ? '(min-width: 720px) 50vw, 100vw' : '100vw'}
+      <figure class:list={['g-item', portrait ? 'is-portrait' : img.width >= 1100 ? 'is-wide' : 'is-landscape']} data-reveal>
+        <Image src={img} alt={alt(p, file)} widths={[600, 1000, 1600]} sizes={portrait ? '(min-width: 1100px) 33vw, (min-width: 720px) 50vw, 100vw' : img.width >= 1100 ? '100vw' : '(min-width: 1100px) 66vw, 100vw'}
           format="webp" quality={78} loading="lazy" />
       </figure>
     );

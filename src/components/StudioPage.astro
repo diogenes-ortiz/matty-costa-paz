@@ -1,71 +1,54 @@
 ---
+// Bio: texto oficial de Matty (Bio.pdf, 18/11/2026), pasado a primera persona.
 import { Image } from 'astro:assets';
-import { SITE, T, ROUTES } from '../data/site.js';
+import { T, ROUTES } from '../data/site.js';
 import { u, photo } from '../lib/helpers.js';
 const { lang = 'es' } = Astro.props;
 const t = T[lang];
 const es = lang === 'es';
 
-const intro = es
-  ? 'Soy diseñadora de interiores y hace más de 30 años que trabajo en proyectos residenciales y corporativos en Buenos Aires, José Ignacio, París y Madrid.'
-  : 'I am an interior designer, and for over 30 years I have worked on residential and corporate projects in Buenos Aires, José Ignacio, Paris and Madrid.';
+const lead = es
+  ? 'Soy interiorista especializada en arquitectura de interiores. Hace más de treinta años que creo espacios para la emoción que genera la belleza, para compartir momentos y vivir una vida bien vivida.'
+  : 'I am an interior designer specialising in interior architecture. For over thirty years I have been creating spaces for the emotion that beauty brings, for sharing moments and living a life well lived.';
 
 const story = es ? [
-  'Me formé de manera autodidacta: cuando terminé el colegio, el diseño de interiores todavía no era una carrera. Visitar Casa FOA en 1985 me terminó de decidir, y durante más de 25 años trabajé en proyectos junto a grandes estudios de arquitectura.',
-  'Me conocen por integrar el diseño interior con la arquitectura. Trabajo siempre en equipo con el cliente, el estudio de arquitectura y la empresa constructora, desde el primer plano hasta el último detalle.',
-  'Viajo todo el año en busca de novedades de diseño y participo en congresos en distintas ciudades del mundo. Comparto lo que aprendo en publicaciones especializadas y en charlas en universidades y empresas.',
+  'Mi lenguaje arquitectónico es sofisticado, atemporal y refinado, concebido a medida de cada cliente: comprendiendo sus sueños, aspiraciones y deseos.',
+  'Doy gran importancia a la armonía entre mis interiores y su entorno, y a la sustentabilidad de cada proyecto.',
+  'Estoy basada en Buenos Aires y tengo proyectos en distintos lugares del mundo. Mis trabajos fueron premiados y publicados en AD Italia, Casa Vogue, Architectural Digest y Elle Decor, entre otras publicaciones internacionales.',
+  'Viajo constantemente: año tras año busco inspiración en distintos lugares del mundo, experiencias que se plasman en mis proyectos.',
 ] : [
-  'I am self-taught: when I finished school, interior design was not yet a degree. A visit to Casa FOA in 1985 settled it for me, and for more than 25 years I worked on projects alongside major architecture firms.',
-  'I am known for integrating interior design with architecture. I always work as a team with the client, the architecture studio and the builder, from the first layout to the last detail.',
-  'I travel all year round in search of new design and take part in congresses around the world. I share what I learn in specialised publications and in talks at universities and companies.',
-];
-
-const principles = es ? [
-  ['Materia', 'Uso refinado de los materiales y colores sofisticados.'],
-  ['Historia', 'Diálogo entre el diseño contemporáneo y las piezas con historia propia.'],
-  ['Luz', 'Respeto por la caja arquitectónica: orden, luz y nada superfluo.'],
-] : [
-  ['Material', 'A refined use of materials and sophisticated colours.'],
-  ['History', 'A dialogue between contemporary design and pieces with a history of their own.'],
-  ['Light', 'Respect for the architectural shell: order, light and nothing superfluous.'],
+  'My architectural language is sophisticated, timeless and refined, conceived for each client: understanding their dreams, aspirations and desires.',
+  'I place great importance on the harmony between my interiors and their surroundings, and on the sustainability of every project.',
+  'I am based in Buenos Aires and work on projects around the world. My work has received awards and has been published in AD Italia, Casa Vogue, Architectural Digest and Elle Decor, among other international publications.',
+  'I travel constantly: year after year I look for inspiration in different places around the world, experiences that find their way into my projects.',
 ];
 
 const path = es ? [
-  ['Leaders of Design Council', 'Miembro. Soy la única integrante argentina en Latinoamérica.'],
-  ['DArA, Diseñadores Argentinos Asociados', 'Integré la Comisión Directiva durante casi una década y trabajé en la organización del congreso DArA id.'],
-  ['IFI, International Federation of Interior Architects / Designers', 'Fui nexo entre DArA y la federación internacional.'],
-  ['Casa FOA', 'Participé en varias ediciones, entre ellas 2014, 2015 y 2016.'],
+  ['Design Leadership Network', 'Miembro.'],
+  ['DINA, Diseñadores Nacionales Asociados', 'Socia honoraria.'],
+  ['DArA, Diseñadores Argentinos Asociados', 'Durante casi una década formé parte de la comisión directiva y puse mi sello en cuatro ediciones del congreso internacional DArA ID.'],
 ] : [
-  ['Leaders of Design Council', 'Member, and the only Argentine member in Latin America.'],
-  ['DArA, Argentine Interior Designers Association', 'Served on the Executive Board for nearly a decade and helped organise the DArA id congress.'],
-  ['IFI, International Federation of Interior Architects / Designers', 'Liaison between DArA and the international federation.'],
-  ['Casa FOA', 'Took part in several editions, including 2014, 2015 and 2016.'],
+  ['Design Leadership Network', 'Member.'],
+  ['DINA, Diseñadores Nacionales Asociados', 'Honorary member.'],
+  ['DArA, Diseñadores Argentinos Asociados', 'For nearly a decade I served on the executive board and left my mark on four editions of the international DArA ID congress.'],
 ];
+
+const publications = ['AD Italia', 'Architectural Digest', 'Casa Vogue', 'Elle Decor'];
 ---
 <section class="page-head wrap">
   <h1 class="band-title">{t.studioTitle}</h1>
-  <p class="page-lead">{intro}</p>
+  <p class="page-lead">{lead}</p>
 </section>
 
 <section class="wrap studio-page">
   <div class="studio-media" data-reveal>
     <!-- [COMPLETAR] retrato de Matty; por ahora, una obra -->
-    <Image src={photo('piso-barrio-salamanca', 'pasillo-entrada.jpg')} alt={es ? 'Pasillo de entrada blanco con vista al salón, piso en Madrid' : 'White entrance hall looking into the living room, Madrid apartment'}
-      widths={[480, 800, 1100]} sizes="(min-width: 960px) 40vw, 100vw" format="webp" quality={78} loading="eager" />
+    <Image src={photo('palacio-de-los-patos', '01.jpg')} alt={es ? 'Living blanco con ventanas en arco y grandes obras de arte, Palacio de los Patos' : 'White living room with arched windows and large artworks, Palacio de los Patos'}
+      widths={[600, 1000]} sizes="(min-width: 960px) 40vw, 100vw" format="webp" quality={80} loading="eager" />
   </div>
   <div class="studio-copy" data-reveal>
     {story.map((s) => <p>{s}</p>)}
-  </div>
-</section>
-
-<section class="band" aria-labelledby="fil">
-  <div class="wrap">
-    <h2 class="band-title" id="fil">{es ? 'Filosofía' : 'Philosophy'}</h2>
-    <ol class="principles">
-      {principles.map(([k, v], i) => (
-        <li data-reveal><span class="label">{String(i + 1).padStart(2, '0')}</span><h3 class="card-title">{k}</h3><p class="card-text">{v}</p></li>
-      ))}
-    </ol>
+    <ul class="cities label" style="justify-content:flex-start;margin-top:32px">{publications.map((m) => <li>{m}</li>)}</ul>
   </div>
 </section>
 

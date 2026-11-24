@@ -14,7 +14,7 @@ const og = await getImage({ src: photo(p.slug, p.cover), width: 1200, format: 'j
 ---
 <Base lang={lang} page="projects" overHero
   title={`${p.name[lang]} | Matty Costa Paz`}
-  description={p.excerpt[lang]}
+  description={p.excerpt?.[lang] ?? `${p.name[lang]}: ${p.scope[lang].toLowerCase()} by Matty Costa Paz in ${p.place[lang]}, ${p.year}.`}
   altPath={`proyectos/${p.slug}/`}
   image={og.src}>
   <ProjectPage p={p} lang={lang} />

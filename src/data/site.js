@@ -10,8 +10,8 @@ export const SITE = {
 };
 
 export const ROUTES = {
-  es: { home: '', projects: 'proyectos/', studio: 'estudio/', press: 'prensa/', contact: 'contacto/' },
-  en: { home: 'en/', projects: 'en/projects/', studio: 'en/studio/', press: 'en/press/', contact: 'en/contact/' },
+  es: { home: '', projects: 'proyectos/', studio: 'bio/', press: 'prensa/', contact: 'contacto/' },
+  en: { home: 'en/', projects: 'en/projects/', studio: 'en/bio/', press: 'en/press/', contact: 'en/contact/' },
 };
 export const NAV = ['projects', 'studio', 'press', 'contact'];
 
@@ -21,29 +21,31 @@ export const T = {
     locale: 'es_AR',
     title: 'Matty Costa Paz | Diseño de interiores',
     description:
-      'Soy Matty Costa Paz, diseñadora de interiores con más de 30 años de trayectoria. Proyectos residenciales y corporativos en Buenos Aires, José Ignacio, París y Madrid.',
-    nav: { projects: 'Proyectos', studio: 'Estudio', press: 'Prensa', contact: 'Contacto' },
+      'Soy Matty Costa Paz, interiorista especializada en arquitectura de interiores. Más de treinta años creando espacios a medida, desde Buenos Aires para proyectos en todo el mundo.',
+    nav: { projects: 'Proyectos', studio: 'Bio', press: 'Prensa', contact: 'Contacto' },
     menu: 'Menú',
     close: 'Cerrar',
     role: 'Diseño de interiores',
-    statement: 'Diseño interiores que integran arquitectura, materia y luz.',
+    statement: 'Creo espacios para la emoción que genera la belleza.',
     intro:
-      'Hace más de 30 años que diseño residencias y espacios de trabajo, siempre en equipo con cada cliente, el estudio de arquitectura y la empresa constructora.',
+      'Interiorismo y arquitectura de interiores a medida de cada cliente. Hace más de treinta años diseño lugares para compartir momentos y vivir una vida bien vivida.',
     latest: 'Últimos proyectos',
     vertical: 'Recientes',
-    verticalStudio: 'Estudio',
+    verticalStudio: 'Bio',
+    more: 'Más proyectos',
+    verticalMore: 'Obras',
     allProjects: 'Ver todos los proyectos',
     view: 'Ver proyecto',
     featured: 'Proyecto destacado',
-    studioLabel: 'Estudio',
+    studioLabel: 'Bio',
     studioText:
-      'Trabajo con un uso refinado de los materiales, colores sofisticados y el diálogo entre el diseño contemporáneo y las piezas con historia propia. Busco que cada espacio refleje la personalidad de quienes lo habitan.',
+      'Mi lenguaje arquitectónico es sofisticado, atemporal y refinado, concebido a medida de cada cliente: comprendiendo sus sueños, aspiraciones y deseos.',
     memberships: [
-      'Miembro de Leaders of Design Council',
-      'Integré la Comisión Directiva de DArA durante casi una década',
-      'Fui nexo de DArA con IFI, International Federation of Interior Architects / Designers',
+      'Miembro de Design Leadership Network',
+      'Socia honoraria de DINA, Diseñadores Nacionales Asociados',
+      'Casi una década en la comisión directiva de DArA',
     ],
-    studioLink: 'Conocer el estudio',
+    studioLink: 'Leer la bio',
     pressTitle: 'En la prensa',
     pressLink: 'Ver notas',
     contactLabel: 'Contacto',
@@ -53,14 +55,12 @@ export const T = {
     skip: 'Saltar al contenido',
     // Proyectos
     projectsTitle: 'Proyectos',
-    projectsIntro: 'Una selección de obras residenciales, corporativas y espacios para Casa FOA, en Argentina, Uruguay y Europa.',
-    all: 'Todos',
-    emptyCat: 'Estoy cargando los proyectos de esta categoría.',
-    fLocation: 'Ubicación', fYear: 'Año', fType: 'Tipo', fArea: 'Superficie', fPhoto: 'Fotografía', fPress: 'Publicado en',
+    projectsIntro: 'Obras realizadas en Buenos Aires, la costa atlántica, Uruguay y Madrid.',
+    fLocation: 'Ubicación', fYear: 'Año de finalización', fScope: 'Alcance', fArea: 'Superficie', fPhoto: 'Fotografía', fPress: 'Publicado en',
     next: 'Proyecto siguiente',
     back: 'Todos los proyectos',
     // Estudio
-    studioTitle: 'Estudio',
+    studioTitle: 'Bio',
     // Prensa
     pressPageTitle: 'Prensa',
     pressIntro: 'Notas, entrevistas y publicaciones sobre mi trabajo.',
@@ -78,29 +78,31 @@ export const T = {
     locale: 'en_US',
     title: 'Matty Costa Paz | Interior Design',
     description:
-      "I'm Matty Costa Paz, an interior designer with over 30 years of experience. Residential and corporate projects in Buenos Aires, José Ignacio, Paris and Madrid.",
-    nav: { projects: 'Projects', studio: 'Studio', press: 'Press', contact: 'Contact' },
+      "I'm Matty Costa Paz, an interior designer specialising in interior architecture. Over thirty years creating tailored spaces, based in Buenos Aires with projects around the world.",
+    nav: { projects: 'Projects', studio: 'Bio', press: 'Press', contact: 'Contact' },
     menu: 'Menu',
     close: 'Close',
     role: 'Interior design',
-    statement: 'I design interiors that bring together architecture, material and light.',
+    statement: 'I create spaces for the emotion that beauty brings.',
     intro:
-      'For over 30 years I have been designing homes and workplaces, always working as a team with each client, the architecture studio and the builder.',
+      'Interior design and interior architecture tailored to each client. For over thirty years I have designed places to share moments and live a life well lived.',
     latest: 'Latest work',
     vertical: 'Recent',
-    verticalStudio: 'Studio',
+    verticalStudio: 'Bio',
+    more: 'More projects',
+    verticalMore: 'Work',
     allProjects: 'View all projects',
     view: 'View project',
     featured: 'Featured project',
-    studioLabel: 'Studio',
+    studioLabel: 'Bio',
     studioText:
-      'I work with a refined use of materials, sophisticated colours and a dialogue between contemporary design and pieces with a history of their own. I want every space to reflect the personality of the people who live in it.',
+      'My architectural language is sophisticated, timeless and refined, conceived for each client: understanding their dreams, aspirations and desires.',
     memberships: [
-      'Member of the Leaders of Design Council',
-      'Served on the DArA Executive Board for nearly a decade',
-      'Liaison between DArA and IFI, International Federation of Interior Architects / Designers',
+      'Member of the Design Leadership Network',
+      'Honorary member of DINA, Diseñadores Nacionales Asociados',
+      'Nearly a decade on the DArA executive board',
     ],
-    studioLink: 'About the studio',
+    studioLink: 'Read the bio',
     pressTitle: 'In the press',
     pressLink: 'Read the press',
     contactLabel: 'Contact',
@@ -109,13 +111,11 @@ export const T = {
     switchTo: 'Español',
     skip: 'Skip to content',
     projectsTitle: 'Projects',
-    projectsIntro: 'A selection of residential and corporate work and Casa FOA spaces in Argentina, Uruguay and Europe.',
-    all: 'All',
-    emptyCat: 'Projects in this category are on their way.',
-    fLocation: 'Location', fYear: 'Year', fType: 'Type', fArea: 'Area', fPhoto: 'Photography', fPress: 'Published in',
+    projectsIntro: 'Completed work in Buenos Aires, the Atlantic coast, Uruguay and Madrid.',
+    fLocation: 'Location', fYear: 'Completed', fScope: 'Scope', fArea: 'Area', fPhoto: 'Photography', fPress: 'Published in',
     next: 'Next project',
     back: 'All projects',
-    studioTitle: 'Studio',
+    studioTitle: 'Bio',
     pressPageTitle: 'Press',
     pressIntro: 'Articles, interviews and publications about my work.',
     pressOnline: 'Online',
@@ -128,27 +128,40 @@ export const T = {
   },
 };
 
-export const CATEGORIES = {
-  residencial: { es: 'Residencial', en: 'Residential' },
-  corporativo: { es: 'Corporativo', en: 'Corporate' },
-  casafoa: { es: 'Casa FOA', en: 'Casa FOA' },
-  internacional: { es: 'Internacional', en: 'International' },
+// Alcance del trabajo, tal como figura en el portfolio de Matty.
+const SCOPE = {
+  di: { es: 'Diseño interior', en: 'Interior design' },
+  int: { es: 'Interiorismo', en: 'Interior design' },
+  aip: { es: 'Arquitectura, interiorismo y diseño del paisaje', en: 'Architecture, interior and landscape design' },
+  dc: { es: 'Dirección creativa en arquitectura e interiorismo', en: 'Creative direction in architecture and interiors' },
 };
+const BA = { es: 'Ciudad de Buenos Aires', en: 'Buenos Aires City' };
+const PBA = { es: 'Provincia de Buenos Aires', en: 'Buenos Aires Province' };
+const at = (a, b) => ({ es: `${a}, ${b.es}`, en: `${a}, ${b.en}` });
 
-// Proyectos con fotos, en el orden de la grilla. year: null => [COMPLETAR].
-// Las fotos vienen de las notas de prensa: confirmar con Matty el permiso de uso y el crédito.
+// Obras del portfolio "Obras realizadas", en el orden en que Matty las presenta.
+// Fotos: portfolio de Matty; Madrid y parte de José Ignacio, de las notas de prensa.
+// Sin texto propio en el portfolio => sin excerpt/body (no se inventa).
 export const PROJECTS = [
   {
+    slug: 'costa-esmeralda-2024',
+    name: { es: 'Costa Esmeralda I', en: 'Costa Esmeralda I' }, // [CONFIRMAR] nombre con Matty
+    place: at('Costa Esmeralda', PBA), year: 2024, scope: SCOPE.di,
+    cover: '01.jpg', card: '01.jpg',
+    gallery: [
+      ['01.jpg', 'Living de doble altura con dos sofás blancos, alfombra de yute y plantas', 'Double-height living room with two white sofas, a jute rug and plants'],
+      ['02.jpg', 'Dormitorio con dos camas y colchas estampadas', 'Bedroom with twin beds and patterned bedspreads'],
+      ['03.jpg', 'Pileta entre pinos con reposeras blancas', 'Pool among pine trees with white loungers'],
+      ['04.jpg', 'Comedor exterior bajo pérgola de listones de madera', 'Outdoor dining area under a timber slat pergola'],
+    ],
+  },
+  {
     slug: 'piso-barrio-salamanca',
-    name: { es: 'Piso en Barrio de Salamanca', en: 'Barrio de Salamanca Apartment' },
-    categories: ['residencial', 'internacional'],
-    type: { es: 'Residencial', en: 'Residential' },
-    place: { es: 'Madrid, España', en: 'Madrid, Spain' },
-    year: null,
+    name: { es: 'Barrio de Salamanca', en: 'Barrio de Salamanca' },
+    place: { es: 'Madrid, España', en: 'Madrid, Spain' }, year: 2023, scope: SCOPE.di,
     area: { es: 'Casi 300 m²', en: 'Almost 300 m²' },
     credit: 'Belén Imaz',
-    cover: 'salon-sofa-marron.jpg',
-    card: 'salon.jpg',
+    cover: 'salon-sofa-marron.jpg', card: 'salon.jpg',
     press: ['elledecor', 'casavogue'],
     excerpt: {
       es: 'Reformé casi 300 m² en el barrio de Salamanca en ocho meses. Espacios abiertos y conectados, blanco absoluto y molduras de yeso que ponen en valor la esencia clásica del edificio.',
@@ -185,16 +198,52 @@ export const PROJECTS = [
     ],
   },
   {
+    slug: 'adrogue-chico',
+    name: { es: 'Adrogué Chico', en: 'Adrogué Chico' },
+    place: at('Adrogué Chico', PBA), year: 2022, scope: SCOPE.aip,
+    cover: '01.jpg', card: '02.jpg',
+    gallery: [
+      ['01.jpg', 'Living con muebles a medida en madera clara y sofás beige', 'Living room with light wood built-ins and beige sofas'],
+      ['02.jpg', 'Pileta y casa de líneas rectas con reposeras', 'Pool and a clean-lined house with loungers'],
+      ['03.jpg', 'Patio con muro de piedra, banco y árboles', 'Courtyard with a stone wall, bench and trees'],
+      ['04.jpg', 'Baño con bañera exenta y ducha vidriada', 'Bathroom with a freestanding tub and glass shower'],
+      ['05.jpg', 'Escritorio con estantes de madera y flores', 'Study with wooden shelves and flowers'],
+    ],
+  },
+  {
+    slug: 'costa-esmeralda-2025',
+    name: { es: 'Costa Esmeralda II', en: 'Costa Esmeralda II' }, // [CONFIRMAR] nombre con Matty
+    place: at('Costa Esmeralda', PBA), year: 2025, scope: SCOPE.di,
+    cover: '01.jpg', card: '05.jpg',
+    gallery: [
+      ['01.jpg', 'Comedor de doble altura con lámparas negras tejidas y ventanales al bosque', 'Double-height dining room with black woven pendants and windows onto the woods'],
+      ['02.jpg', 'Living con escalera y muro de piedra', 'Living room with a staircase and stone wall'],
+      ['03.jpg', 'Sala de juegos con mesa de pool y pared de cuadros', 'Games room with a pool table and a gallery wall'],
+      ['04.jpg', 'Dormitorio con respaldo azul y lámpara blanca', 'Bedroom with a navy headboard and white lamp'],
+      ['05.jpg', 'Pileta rodeada de árboles', 'Pool surrounded by trees'],
+      ['06.jpg', 'Comedor exterior bajo pérgola negra', 'Outdoor dining under a black pergola'],
+      ['07.jpg', 'Sillón azul junto al ventanal con vista al bosque', 'Navy armchair by a window onto the woods'],
+      ['08.jpg', 'Mesa del comedor con vista al exterior', 'Dining table looking outdoors'],
+      ['09.jpg', 'Detalle de un velero de madera sobre la mesada', 'Detail of a wooden model sailboat on a counter'],
+    ],
+  },
+  {
+    slug: 'botanico',
+    name: { es: 'Botánico', en: 'Botánico' },
+    place: at('Botánico', BA), year: 2021, scope: SCOPE.int,
+    cover: '01.jpg', card: '01.jpg',
+    gallery: [
+      ['01.jpg', 'Living blanco con círculo rojo, palmeras y alfombras a rayas', 'White living room with a red circle, palms and striped rugs'],
+      ['02.jpg', 'Balcón con toldo a rayas y sillas rojas', 'Balcony with a striped awning and red chairs'],
+      ['03.jpg', 'Pasillo verde azulado con lámpara tejida y alfombra a rayas', 'Teal hallway with a woven lamp and striped runner'],
+      ['04.jpg', 'Dormitorio con almohadones blancos y negros y obra circular', 'Bedroom with black and white cushions and a circular artwork'],
+    ],
+  },
+  {
     slug: 'beach-house-jose-ignacio',
-    name: { es: 'Beach House José Ignacio', en: 'Beach House José Ignacio' },
-    categories: ['residencial', 'internacional'],
-    type: { es: 'Residencial', en: 'Residential' },
-    place: { es: 'José Ignacio, Uruguay', en: 'José Ignacio, Uruguay' },
-    year: null,
-    area: null,
-    credit: null, // [COMPLETAR] Elle publica las fotos como D.R.
-    cover: 'fachada.jpg',
-    card: 'escalera-terraza.jpg',
+    name: { es: 'Club de Mar, José Ignacio', en: 'Club de Mar, José Ignacio' },
+    place: { es: 'José Ignacio, Uruguay', en: 'José Ignacio, Uruguay' }, year: 2020, scope: SCOPE.aip,
+    cover: 'pf-01.jpg', card: 'escalera-terraza.jpg',
     press: ['elle'],
     excerpt: {
       es: 'Rediseñamos esta casa frente al mar desde la fachada hasta el paisajismo. Blanco, materiales naturales y celosías de madera de inspiración marroquí, en diálogo con una colección de arte moderno.',
@@ -213,15 +262,82 @@ export const PROJECTS = [
       ],
     },
     gallery: [
-      ['fachada.jpg', 'Fachada blanca con alero de quincha y palmeras', 'White façade with a thatched eave and palm trees'],
+      ['pf-01.jpg', 'Casa blanca frente al mar con alero de quincha y palmeras', 'White beach house with a thatched eave and palm trees'],
       ['escalera-terraza.jpg', 'Escalera blanca hacia la terraza bajo el cielo', 'White staircase leading up to the terrace'],
-      ['playa.jpg', 'Vista al mar desde la terraza con camastro', 'Sea view from the terrace with a daybed'],
+      ['pf-02.jpg', 'Living blanco de doble altura con cabriadas a la vista', 'Double-height white living room with exposed trusses'],
+      ['pf-03.jpg', 'Comedor con lámparas de mimbre y sillas tejidas', 'Dining room with wicker pendants and woven chairs'],
       ['galeria-entrada.jpg', 'Celosías de madera y sillas de mimbre en la entrada', 'Timber lattices and wicker chairs at the entrance'],
-      ['comedor.jpg', 'Comedor con lámparas de mimbre y sillas tejidas en cardo', 'Dining room with wicker pendant lamps and woven chairs'],
-      ['dormitorio.jpg', 'Dormitorio con materiales naturales y obra de arte', 'Bedroom with natural materials and an artwork'],
+      ['pf-04.jpg', 'Cocina blanca con mesa redonda', 'White kitchen with a round table'],
+      ['pf-05.jpg', 'Dormitorio con respaldo de fibra natural', 'Bedroom with a natural fibre headboard'],
+      ['pf-06.jpg', 'Baño blanco con bañera exenta', 'White bathroom with a freestanding tub'],
       ['toilette.jpg', 'Toilette con rayas azules y blancas y espejo de escotilla', 'Powder room with blue and white stripes and a porthole mirror'],
-      ['pileta.jpg', 'Pileta con camastros blancos bajo alero de quincha', 'Pool with white loungers under a thatched eave'],
+      ['pf-07.jpg', 'Pileta vista desde la galería con quincha', 'Pool seen from the thatched gallery'],
+      ['playa.jpg', 'Vista al mar desde la terraza', 'Sea view from the terrace'],
       ['deck.jpg', 'Deck de madera hacia la playa', 'Timber deck leading towards the beach'],
+    ],
+  },
+  {
+    slug: 'retiro',
+    name: { es: 'Retiro', en: 'Retiro' },
+    place: at('Retiro', BA), year: 2024, scope: SCOPE.int,
+    cover: '01.jpg', card: '01.jpg',
+    gallery: [
+      ['01.jpg', 'Living blanco con bow window, hogar y mesas de vidrio', 'White living room with a bay window, fireplace and glass tables'],
+      ['02.jpg', 'Biblioteca negra con hogar y banco de cuero', 'Black library with a fireplace and leather bench'],
+      ['03.jpg', 'Comedor con sillas negras y obra en tonos turquesa', 'Dining corner with black chairs and a turquoise artwork'],
+      ['04.jpg', 'Cocina con alacenas negras y azulejos blancos', 'Kitchen with black cabinets and white tiles'],
+      ['05.jpg', 'Baño con azulejos verdes y piso calcáreo', 'Bathroom with green tiles and patterned floor'],
+      ['06.jpg', 'Baño en tonos arena con espejo redondo', 'Sand-toned bathroom with a round mirror'],
+    ],
+  },
+  {
+    slug: 'caballito',
+    name: { es: 'Caballito', en: 'Caballito' },
+    place: at('Caballito', BA), year: 2022, scope: SCOPE.int,
+    cover: '01.jpg', card: '01.jpg',
+    gallery: [
+      ['01.jpg', 'Living con sofá gris, mesas de cemento y puff amarillo', 'Living room with a grey sofa, concrete tables and a yellow pouf'],
+      ['02.jpg', 'Comedor con mesa de piedra y lámpara dorada', 'Dining room with a stone table and brass chandelier'],
+      ['03.jpg', 'Desayunador con mesa redonda y sillas bistró', 'Breakfast nook with a round table and bistro chairs'],
+      ['04.jpg', 'Banco tapizado frente a un mural de nubes', 'Upholstered bench in front of a cloud mural'],
+    ],
+  },
+  {
+    slug: 'lomas-de-san-isidro',
+    name: { es: 'Lomas de San Isidro', en: 'Lomas de San Isidro' },
+    place: at('Lomas de San Isidro', PBA), year: 2020, scope: SCOPE.int,
+    cover: '01.jpg', card: '02.jpg',
+    gallery: [
+      ['01.jpg', 'Living y comedor en tonos tierra con ventanal al jardín', 'Earth-toned living and dining room with a window onto the garden'],
+      ['02.jpg', 'Galería con arco, jardín vertical y sillas de mimbre', 'Arched gallery with a vertical garden and wicker chairs'],
+      ['03.jpg', 'Sala de música con alfombra roja y piano', 'Music room with a red rug and piano'],
+      ['04.jpg', 'Sillones de cuero junto al hogar', 'Leather armchairs by the fireplace'],
+    ],
+  },
+  {
+    slug: 'palacio-de-los-patos',
+    name: { es: 'Palacio de los Patos', en: 'Palacio de los Patos' },
+    place: at('Palermo', BA), year: 2016, scope: SCOPE.dc,
+    press: ['ad'],
+    cover: '01.jpg', card: '02.jpg',
+    gallery: [
+      ['01.jpg', 'Living blanco con ventanas en arco y grandes obras de arte', 'White living room with arched windows and large artworks'],
+      ['02.jpg', 'Puerta en arco con piso de mármol en damero', 'Arched doorway with a chequered marble floor'],
+      ['03.jpg', 'Hogar clásico con obra de arte y silla blanca', 'Classic fireplace with an artwork and white chair'],
+      ['04.jpg', 'Cocina con mármol y alacenas negras', 'Kitchen with marble and black cabinets'],
+      ['05.jpg', 'Baño negro con luces verticales', 'Black bathroom with vertical lights'],
+    ],
+  },
+  {
+    slug: 'le-parc',
+    name: { es: 'Le Parc', en: 'Le Parc' },
+    place: at('Edificio Le Parc, Barrio Parque', BA), year: 2015, scope: SCOPE.int,
+    cover: '01.jpg', card: '02.jpg',
+    gallery: [
+      ['01.jpg', 'Living con vista a la ciudad y biblioteca oscura', 'Living room with city views and a dark bookcase'],
+      ['02.jpg', 'Sillones y mesa baja frente al ventanal', 'Armchairs and a low table by the window'],
+      ['03.jpg', 'Dormitorio con ropa de cama blanca y estampada', 'Bedroom with white and patterned bedding'],
+      ['04.jpg', 'Vestidor blanco con alfombra redonda', 'White dressing room with a round rug'],
     ],
   },
 ];

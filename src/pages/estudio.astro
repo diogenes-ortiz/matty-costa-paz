@@ -1,5 +1,4 @@
 ---
-import Base from '../layouts/Base.astro';
-import C from '../components/StudioPage.astro';
+const to = import.meta.env.BASE_URL.replace(/\/?$/, '/') + 'bio/';
 ---
-<Base lang="es" page="studio" title="Estudio | Matty Costa Paz" description="Trayectoria y filosofía de Matty Costa Paz, diseñadora de interiores. Leaders of Design Council, DArA e IFI."><C lang="es" /></Base>
+<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="refresh" content={`0; url=${to}`}><link rel="canonical" href={to}><meta name="robots" content="noindex"></head><body><a href={to}>Bio</a></body></html>
