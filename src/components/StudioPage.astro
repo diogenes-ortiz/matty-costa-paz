@@ -1,5 +1,6 @@
 ---
-// Bio: texto oficial de Matty (Bio.pdf, 18/11/2026), pasado a primera persona.
+// Bio: texto oficial de Matty (Bio.pdf), tal cual lo escribió, en tercera persona.
+// Solo se limpiaron los cortes de línea del PDF y dos tildes (década, formó).
 import { Image } from 'astro:assets';
 import { T, ROUTES, PROJECTS } from '../data/site.js';
 import { u, photo, altFor } from '../lib/helpers.js';
@@ -9,32 +10,24 @@ const t = T[lang];
 const es = lang === 'es';
 
 const lead = es
-  ? 'Soy interiorista especializada en arquitectura de interiores. Hace más de treinta años que creo espacios para la emoción que genera la belleza, para compartir momentos y vivir una vida bien vivida.'
-  : 'I am an interior designer specialising in interior architecture. For over thirty years I have been creating spaces for the emotion that beauty brings, for sharing moments and living a life well lived.';
+  ? 'Matty Costa Paz es interiorista especializada en arquitectura de interiores, creando espacios para la emoción que genera la belleza, para compartir momentos y vivir una vida bien vivida hace más de treinta años.'
+  : 'Matty Costa Paz is an interior designer specialising in interior architecture, creating spaces for the emotion that beauty brings, for sharing moments and living a life well lived, for over thirty years.';
 
 const story = es ? [
-  'Mi lenguaje arquitectónico es sofisticado, atemporal y refinado, concebido a medida de cada cliente: comprendiendo sus sueños, aspiraciones y deseos.',
-  'Doy gran importancia a la armonía entre mis interiores y su entorno, y a la sustentabilidad de cada proyecto.',
-  'Estoy basada en Buenos Aires y tengo proyectos en distintos lugares del mundo. Mis trabajos fueron premiados y publicados en AD Italia, Casa Vogue, Architectural Digest y Elle Decor, entre otras publicaciones internacionales.',
-  'Viajo constantemente: año tras año busco inspiración en distintos lugares del mundo, experiencias que se plasman en mis proyectos.',
+  'Su lenguaje arquitectónico es sofisticado, atemporal y refinado concebido a medida de cada cliente, comprendiendo sus sueños, aspiraciones y deseos.',
+  'Como diseñadora da gran importancia a la armonía entre sus interiores y su entorno y la sustentabilidad de cada proyecto.',
+  'Basada en Buenos Aires y con proyectos globales, multipremiada, sus trabajos han sido publicados en AD Italia, Casa Vogue, Architectural Digest, ElleDecor entre otras publicaciones internacionales.',
+  'Viajera constante año tras año busca inspiración en diferentes lugares del mundo, experiencias que se plasma en sus proyectos.',
+  'Es miembro de Design Leadership Network.',
+  'Socia Honoraria de DINA (Diseñadores Nacionales Asociados) y durante casi una década formó parte de la comisión directiva de DArA donde puso su sello en el congreso internacional DArA ID en cuatro ediciones.',
 ] : [
-  'My architectural language is sophisticated, timeless and refined, conceived for each client: understanding their dreams, aspirations and desires.',
-  'I place great importance on the harmony between my interiors and their surroundings, and on the sustainability of every project.',
-  'I am based in Buenos Aires and work on projects around the world. My work has received awards and has been published in AD Italia, Casa Vogue, Architectural Digest and Elle Decor, among other international publications.',
-  'I travel constantly: year after year I look for inspiration in different places around the world, experiences that find their way into my projects.',
+  'Her architectural language is sophisticated, timeless and refined, conceived for each client, understanding their dreams, aspirations and desires.',
+  'As a designer she places great importance on the harmony between her interiors and their surroundings, and on the sustainability of every project.',
+  'Based in Buenos Aires with projects around the world, and recipient of multiple awards, her work has been published in AD Italia, Casa Vogue, Architectural Digest and Elle Decor, among other international publications.',
+  'A constant traveller, year after year she seeks inspiration in different places around the world, experiences that find their way into her projects.',
+  'She is a member of the Design Leadership Network.',
+  'Honorary member of DINA (Diseñadores Nacionales Asociados), she served for nearly a decade on the executive board of DArA, where she left her mark on four editions of the international DArA ID congress.',
 ];
-
-const path = es ? [
-  ['Design Leadership Network', 'Miembro.'],
-  ['DINA, Diseñadores Nacionales Asociados', 'Socia honoraria.'],
-  ['DArA, Diseñadores Argentinos Asociados', 'Durante casi una década formé parte de la comisión directiva y puse mi sello en cuatro ediciones del congreso internacional DArA ID.'],
-] : [
-  ['Design Leadership Network', 'Member.'],
-  ['DINA, Diseñadores Nacionales Asociados', 'Honorary member.'],
-  ['DArA, Diseñadores Argentinos Asociados', 'For nearly a decade I served on the executive board and left my mark on four editions of the international DArA ID congress.'],
-];
-
-const publications = ['AD Italia', 'Architectural Digest', 'Casa Vogue', 'Elle Decor'];
 ---
 <section class="page-head wrap">
   <h1 class="band-title">{t.studioTitle}</h1>
@@ -49,16 +42,6 @@ const publications = ['AD Italia', 'Architectural Digest', 'Casa Vogue', 'Elle D
   </div>
   <div class="studio-copy" data-reveal>
     {story.map((s) => <p>{s}</p>)}
-    <ul class="cities label" style="justify-content:flex-start;margin-top:32px">{publications.map((m) => <li>{m}</li>)}</ul>
-  </div>
-</section>
-
-<section class="band press" aria-labelledby="tra">
-  <div class="wrap">
-    <h2 class="band-title" id="tra">{es ? 'Trayectoria' : 'Background'}</h2>
-    <dl class="path">
-      {path.map(([k, v]) => (<div data-reveal><dt class="card-title">{k}</dt><dd class="card-text">{v}</dd></div>))}
-    </dl>
   </div>
 </section>
 

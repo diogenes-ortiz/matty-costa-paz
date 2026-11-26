@@ -31,8 +31,8 @@ export const altFor = (p, file, lang, { full = false } = {}) => {
 
 // Intro factual para obras sin texto propio (solo datos del portfolio).
 export const factualIntro = (p, lang) => lang === 'es'
-  ? `${p.scope.es} que realicé en ${p.place.es}, finalizado en ${p.year}.`
-  : `${p.scope.en} project I completed in ${p.place.en} in ${p.year}.`;
+  ? `${p.scope.es} en ${p.place.es}, finalizado en ${p.year}.`
+  : `${p.scope.en} project in ${p.place.en}, completed in ${p.year}.`;
 
 // Título y descripción SEO de cada obra.
 export const projectSeo = (p, lang) => {
